@@ -1,0 +1,22 @@
+{
+  "name": "Sherpa Economy - Guide-First Leadership",
+  "short_name": "Sherpa Economy",
+  "description": "Why the Future Belongs to Guides, Not Gurus - Leadership transformation by David Runnels",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a3a52",
+  "theme_color": "#e67e22",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}

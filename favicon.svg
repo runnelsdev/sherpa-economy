@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Dark background -->
+  <rect x="0" y="0" width="32" height="32" fill="#2C3E50"/>
+  
+  <!-- Mountain peak -->
+  <path d="M16 8 L8 24 L24 24 Z" fill="#ECF0F1"/>
+  
+  <!-- Snow cap on peak -->
+  <path d="M16 8 L13 14 L19 14 Z" fill="#FFFFFF" opacity="0.7"/>
+  
+  <!-- Helping hand reaching up -->
+  <path d="M16 16 L16 24 M16 16 Q14 14 12 14 M16 16 Q18 14 20 14" stroke="#E74C3C" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  
+  <!-- Supporting hand from below -->
+  <path d="M10 26 Q16 22 22 26" stroke="#3498DB" stroke-width="2" stroke-linecap="round" fill="none"/>
+</svg>
