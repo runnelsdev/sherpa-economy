@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherpa Economy - Why the Future Belongs to Guides, Not Gurus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 58, 82, 0.9), rgba(26, 58, 82, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tagline {
+            color: var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .author {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transform: scale(1);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Mountain Animation */
+        .mountain-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,213.3C672,203,768,149,864,128C960,107,1056,117,1152,138.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: no-repeat;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        
+        /* Core Message Section */
+        .core-message {
+            padding: 5rem 2rem;
+            background: var(--light);
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .quote {
+            font-size: 1.8rem;
+            font-style: italic;
+            color: var(--accent);
+            max-width: 800px;
+            margin: 2rem auto;
+            line-height: 1.4;
+        }
+        
+        /* Features Grid */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .testimonial-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            padding: 5rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            min-width: 250px;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 5rem 2rem;
+            background: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .about-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            margin: 0 auto;
+        }
+        
+        .about-text h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .about-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        /* Floating Elements Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="mountain-bg"></div>
+        <div class="hero-content">
+            <p class="tagline">A New Leadership Paradigm</p>
+            <h1>Sherpa Economy</h1>
+            <p class="subtitle">Why the Future Belongs to Guides, Not Gurus</p>
+            <p class="author">By David Runnels</p>
+            <div class="cta-container">
+                <a href="#order" class="btn btn-primary">Pre-Order Now</a>
+                <a href="#newsletter" class="btn btn-secondary">Join the Movement</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Core Message -->
+    <section class="core-message">
+        <div class="container">
+            <h2 class="section-title">Your Scars Are Someone Else's Roadmap</h2>
+            <p class="quote">"We're drowning in gurus pointing at distant peaks, but starving for guides willing to walk alongside us."</p>
+            <p style="max-width: 800px; margin: 0 auto; color: #666; line-height: 1.8;">
+                In our hyperconnected, AI-augmented world, the most valuable people aren't those who shout the loudest from the top of the mountain. They're the ones who show up consistently, remove obstacles for others, and measure success by how many people they help reach their own summits.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center;">What You'll Discover</h2>
+            <div class="features-grid">
+                <div class="feature-card floating" style="animation-delay: 0.1s;">
+                    <div class="feature-icon">🏔️</div>
+                    <h3 class="feature-title">The Sherpa Way</h3>
+                    <p class="feature-description">Learn timeless wisdom from Nepal's Sherpa culture about resilience, humility, and service-based leadership that transforms organizations.</p>
+                </div>
+                <div class="feature-card floating" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Proof Leadership</h3>
+                    <p class="feature-description">Discover why human guides become more valuable, not less, in an AI-saturated world where information is free but wisdom is priceless.</p>
+                </div>
+                <div class="feature-card floating" style="animation-delay: 0.3s;">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Practical Frameworks</h3>
+                    <p class="feature-description">Apply battle-tested tools from hundreds of client interactions to discover your "inner Sherpa" and create meaningful impact.</p>
+                </div>
+                <div class="feature-card floating" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Measurable Results</h3>
+                    <p class="feature-description">Learn from organizations that reduced turnover by 52% and increased revenue by 28% using Sherpa principles.</p>
+                </div>
+                <div class="feature-card floating" style="animation-delay: 0.5s;">
+                    <div class="feature-icon">🎓</div>
+                    <h3 class="feature-title">Certification Path</h3>
+                    <p class="feature-description">Access the Sherpa Leadership Certification framework to formalize your guidance practice and join a global community.</p>
+                </div>
+                <div class="feature-card floating" style="animation-delay: 0.6s;">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Global Movement</h3>
+                    <p class="feature-description">Join leaders from Microsoft, Amazon, nonprofits, and churches who are transforming their organizations with guide-first leadership.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; color: white;">Leaders Are Already Transforming</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"We expanded services by 40% during the pandemic while others were closing. That's the power of having a Sherpa."</p>
+                    <p class="testimonial-author">Marcus Thompson</p>
+                    <p class="testimonial-role">Executive Director, Haven House Services</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"My team's engagement scores increased 34% in six months. This approach works."</p>
+                    <p class="testimonial-author">Jennifer Martinez</p>
+                    <p class="testimonial-role">Senior Manager, Microsoft</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"When you measure success by how many people you elevate, everything changes—including your bottom line."</p>
+                    <p class="testimonial-author">Raj Patel</p>
+                    <p class="testimonial-role">CEO, TechForward Solutions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Author -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">DR</div>
+                <div class="about-text">
+                    <h3>About David Runnels</h3>
+                    <p>David Runnels is the founder of Stories & Systems, where he helps purpose-driven organizations bridge the gap between vision and execution. With experience guiding 45+ organizations through successful transitions and training 1,200+ leaders in Sherpa methodology, David brings both practical wisdom and proven frameworks to the conversation about modern leadership.</p>
+                    <p>His work has helped nonprofits secure $4.2M in new funding, reduced organizational turnover by up to 52%, and transformed leadership cultures at companies including Microsoft, Amazon, and Salesforce teams.</p>
+                    <a href="#" class="btn btn-primary" style="margin-top: 1rem;">Learn More About David</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Join the Sherpa Economy Movement</h2>
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.9);">Get exclusive excerpts, leadership insights, and early access to the Sherpa Leadership Certification</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="btn btn-primary">Join 2,400+ Leaders</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">Email</a>
+            <a href="#">Speaking</a>
+            <a href="#">Consulting</a>
+        </div>
+        <p>&copy; 2025 David Runnels | Stories & Systems</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
+    </footer>
+    
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form submission handler
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for joining the Sherpa Economy movement! Check your email for confirmation.');
+            this.reset();
+        });
+        
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
