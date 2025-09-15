@@ -14,6 +14,18 @@
   to = "/sherpa-assessment.html"
   status = 200
 
+[[redirects]]
+  # Redirect /speaking to speaking page
+  from = "/speaking"
+  to = "/speaking.html"
+  status = 200
+
+[[redirects]]
+  # Redirect /consulting to consulting page
+  from = "/consulting"
+  to = "/consulting.html"
+  status = 200
+
 [[headers]]
   # Security headers for all pages
   for = "/*"

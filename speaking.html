@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking - David Runnels | Sherpa Economy Leadership</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 58, 82, 0.9), rgba(26, 58, 82, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            padding-top: 80px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tagline {
+            color: var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transform: scale(1);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* Speaking Topics */
+        .topics {
+            background: var(--light);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .topic-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .topic-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .topic-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .topic-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .topic-points li {
+            color: #666;
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .topic-points li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Speaking Formats */
+        .formats {
+            background: white;
+        }
+
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .format-card {
+            text-align: center;
+            padding: 2rem;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .format-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .format-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .format-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .format-duration {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="speaking.html" class="active">Speaking</a></li>
+                <li><a href="consulting.html">Consulting</a></li>
+                <li><a href="sherpa-assessment.html">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="tagline">Keynote Speaker & Leadership Guide</p>
+            <h1>Transform Your Organization</h1>
+            <p class="subtitle">From Guru Culture to Guide-First Leadership</p>
+            <div class="cta-container">
+                <a href="#contact" class="btn btn-primary">Book David</a>
+                <a href="#topics" class="btn btn-secondary">View Topics</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speaking Topics -->
+    <section class="section topics" id="topics">
+        <div class="container">
+            <h2 class="section-title">Speaking Topics</h2>
+            <p class="section-subtitle">
+                David brings over a decade of leadership transformation experience to audiences worldwide, 
+                combining practical frameworks with compelling storytelling from his work with 45+ organizations.
+            </p>
+            
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <div class="topic-icon">🏔️</div>
+                    <h3 class="topic-title">The Sherpa Economy</h3>
+                    <p class="topic-description">
+                        Why the future belongs to guides, not gurus. Learn how Sherpa principles are transforming 
+                        modern leadership in the age of AI and information overload.
+                    </p>
+                    <ul class="topic-points">
+                        <li>The death of the guru model</li>
+                        <li>AI-proof leadership skills</li>
+                        <li>Building guide-first cultures</li>
+                        <li>Measuring success by elevation</li>
+                    </ul>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-icon">🎯</div>
+                    <h3 class="topic-title">Your Scars Are Someone's Roadmap</h3>
+                    <p class="topic-description">
+                        Transform your struggles into strength for others. Discover how vulnerability and authenticity 
+                        create the most powerful leadership impact.
+                    </p>
+                    <ul class="topic-points">
+                        <li>Leading from scars, not success</li>
+                        <li>The power of vulnerable leadership</li>
+                        <li>Creating psychological safety</li>
+                        <li>Building trust through transparency</li>
+                    </ul>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-icon">🚀</div>
+                    <h3 class="topic-title">From Vision to Execution</h3>
+                    <p class="topic-description">
+                        Bridge the gap between big dreams and daily reality. Learn the systems and stories 
+                        framework that turns purpose into profit.
+                    </p>
+                    <ul class="topic-points">
+                        <li>The Stories & Systems framework</li>
+                        <li>Operationalizing purpose</li>
+                        <li>Building execution muscles</li>
+                        <li>Sustaining momentum through change</li>
+                    </ul>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-icon">🔄</div>
+                    <h3 class="topic-title">Leading Through Transition</h3>
+                    <p class="topic-description">
+                        Navigate organizational change with confidence. Practical tools for leading teams 
+                        through uncertainty while maintaining culture and performance.
+                    </p>
+                    <ul class="topic-points">
+                        <li>The transition leadership model</li>
+                        <li>Managing resistance and fear</li>
+                        <li>Communicating through change</li>
+                        <li>Preserving culture during transformation</li>
+                    </ul>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-icon">💡</div>
+                    <h3 class="topic-title">AI-Proof Your Leadership</h3>
+                    <p class="topic-description">
+                        Future-proof your career and organization. Understand what makes human leaders 
+                        more valuable, not less, in an AI-augmented world.
+                    </p>
+                    <ul class="topic-points">
+                        <li>Human skills in an AI world</li>
+                        <li>The irreplaceable guide</li>
+                        <li>Emotional intelligence amplified</li>
+                        <li>Leading human-AI teams</li>
+                    </ul>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-icon">📈</div>
+                    <h3 class="topic-title">The ROI of Guide Leadership</h3>
+                    <p class="topic-description">
+                        See the business case for guide-first leadership. Real data from organizations 
+                        that reduced turnover by 52% and increased revenue by 28%.
+                    </p>
+                    <ul class="topic-points">
+                        <li>Measurable leadership impact</li>
+                        <li>Retention and engagement metrics</li>
+                        <li>Revenue correlation studies</li>
+                        <li>Building the business case</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speaking Formats -->
+    <section class="section formats">
+        <div class="container">
+            <h2 class="section-title">Speaking Formats</h2>
+            <p class="section-subtitle">
+                Flexible formats designed to meet your audience's needs and create lasting impact
+            </p>
+            
+            <div class="formats-grid">
+                <div class="format-card">
+                    <div class="format-icon">🎤</div>
+                    <h3 class="format-title">Keynote</h3>
+                    <p class="format-duration">45-60 minutes</p>
+                    <p>High-energy, story-driven presentations that inspire and challenge audiences to rethink leadership</p>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🛠️</div>
+                    <h3 class="format-title">Workshop</h3>
+                    <p class="format-duration">2-4 hours</p>
+                    <p>Interactive sessions with practical tools, frameworks, and hands-on application for immediate use</p>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">📚</div>
+                    <h3 class="format-title">Masterclass</h3>
+                    <p class="format-duration">Half or Full Day</p>
+                    <p>Deep-dive training combining theory, practice, and personalized coaching for leadership teams</p>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">💬</div>
+                    <h3 class="format-title">Panel Discussion</h3>
+                    <p class="format-duration">30-45 minutes</p>
+                    <p>Thought leadership conversations on the future of work, leadership, and organizational culture</p>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🎯</div>
+                    <h3 class="format-title">Fireside Chat</h3>
+                    <p class="format-duration">20-30 minutes</p>
+                    <p>Intimate conversations sharing real stories, lessons learned, and practical wisdom</p>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">💻</div>
+                    <h3 class="format-title">Virtual Presentation</h3>
+                    <p class="format-duration">Flexible</p>
+                    <p>Engaging online presentations designed specifically for virtual audiences and remote teams</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">What Audiences Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"David's keynote completely shifted how we think about leadership. Our engagement scores increased 34% in six months following his presentation."</p>
+                    <p class="testimonial-author">Jennifer Martinez</p>
+                    <p class="testimonial-role">Senior Manager, Microsoft</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The most practical and inspiring speaker we've had. His Sherpa framework gave our entire leadership team a new language for success."</p>
+                    <p class="testimonial-author">Marcus Thompson</p>
+                    <p class="testimonial-role">Executive Director, Haven House Services</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"David doesn't just inspire—he equips. Our team left with actual tools they could use immediately. Rare combination of vision and practicality."</p>
+                    <p class="testimonial-author">Raj Patel</p>
+                    <p class="testimonial-role">CEO, TechForward Solutions</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"His storytelling ability is unmatched. David made complex leadership concepts accessible and memorable for our entire organization."</p>
+                    <p class="testimonial-author">Sarah Chen</p>
+                    <p class="testimonial-role">VP of People Operations, Salesforce</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"We've had many speakers, but David's message about guide-first leadership has fundamentally changed how we operate. Highly recommend."</p>
+                    <p class="testimonial-author">Dr. Michael Rodriguez</p>
+                    <p class="testimonial-role">President, Leadership Institute</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"David's vulnerability and authenticity created a safe space for our leaders to be real about their challenges. Transformational experience."</p>
+                    <p class="testimonial-author">Amanda Foster</p>
+                    <p class="testimonial-role">Chief People Officer, Growth Ventures</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Book David for Your Event</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+                Ready to transform your organization with guide-first leadership? Let's discuss how David can serve your audience.
+            </p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Your Name" required>
+                    <input type="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Organization" required>
+                    <input type="text" class="form-input" placeholder="Event Date" required>
+                </div>
+                <textarea class="form-textarea" placeholder="Tell us about your event, audience size, format preferences, and how we can help..." required></textarea>
+                <button type="submit" class="btn btn-primary" style="justify-self: center; max-width: 300px;">Send Speaking Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/davidrunnels/">LinkedIn</a>
+            <a href="mailto:info@sherpaeconomy.com">Email</a>
+            <a href="speaking.html">Speaking</a>
+            <a href="consulting.html">Consulting</a>
+        </div>
+        <p>&copy; 2025 David Runnels | Stories & Systems</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your speaking inquiry! David will respond within 24 hours.');
+            this.reset();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 58, 82, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards
+        document.querySelectorAll('.topic-card, .format-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

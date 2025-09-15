@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulting - David Runnels | Sherpa Economy Leadership</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 58, 82, 0.9), rgba(26, 58, 82, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            padding-top: 80px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tagline {
+            color: var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transform: scale(1);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* Services */
+        .services {
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--accent);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+
+        .service-features li {
+            color: #666;
+            padding: 0.25rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .service-duration {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Process */
+        .process {
+            background: white;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .process-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .process-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Results */
+        .results {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .result-description {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        /* Case Studies */
+        .case-studies {
+            background: var(--light);
+        }
+
+        .case-study {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .case-study-header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .case-study-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .case-study-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .case-study-type {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .case-study-content {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-input, .form-select {
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-textarea {
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+
+            .case-study-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="consulting.html" class="active">Consulting</a></li>
+                <li><a href="sherpa-assessment.html">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="tagline">Organizational Transformation</p>
+            <h1>Guide Your Organization</h1>
+            <p class="subtitle">From Vision to Execution with Sherpa Leadership</p>
+            <div class="cta-container">
+                <a href="#contact" class="btn btn-primary">Start Your Journey</a>
+                <a href="#services" class="btn btn-secondary">View Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section services" id="services">
+        <div class="container">
+            <h2 class="section-title">Consulting Services</h2>
+            <p class="section-subtitle">
+                Transform your organization with proven frameworks and personalized guidance. 
+                45+ organizations have already made the journey from vision to execution.
+            </p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏔️</div>
+                    <h3 class="service-title">Sherpa Leadership Transformation</h3>
+                    <p class="service-description">
+                        Complete organizational transformation using the Sherpa Leadership model. 
+                        Move from guru culture to guide-first leadership.
+                    </p>
+                    <ul class="service-features">
+                        <li>Leadership assessment and gap analysis</li>
+                        <li>Custom Sherpa framework implementation</li>
+                        <li>Executive coaching and team development</li>
+                        <li>Culture change management</li>
+                        <li>Measurement and accountability systems</li>
+                    </ul>
+                    <p class="service-duration">6-12 month engagement</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3 class="service-title">Vision to Execution Bridge</h3>
+                    <p class="service-description">
+                        Bridge the gap between big dreams and daily reality using the Stories & Systems framework.
+                    </p>
+                    <ul class="service-features">
+                        <li>Strategic planning facilitation</li>
+                        <li>Operational system design</li>
+                        <li>Process optimization</li>
+                        <li>Team alignment workshops</li>
+                        <li>Execution tracking tools</li>
+                    </ul>
+                    <p class="service-duration">3-6 month engagement</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3 class="service-title">Transition Leadership</h3>
+                    <p class="service-description">
+                        Navigate major organizational changes while preserving culture and maintaining performance.
+                    </p>
+                    <ul class="service-features">
+                        <li>Change readiness assessment</li>
+                        <li>Transition planning and communication</li>
+                        <li>Resistance management strategies</li>
+                        <li>Leadership coaching through change</li>
+                        <li>Culture preservation techniques</li>
+                    </ul>
+                    <p class="service-duration">4-8 month engagement</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📈</div>
+                    <h3 class="service-title">Leadership Team Development</h3>
+                    <p class="service-description">
+                        Build high-performing leadership teams that elevate others and drive results.
+                    </p>
+                    <ul class="service-features">
+                        <li>Team dynamics assessment</li>
+                        <li>Communication and conflict resolution</li>
+                        <li>Decision-making frameworks</li>
+                        <li>Individual executive coaching</li>
+                        <li>Team effectiveness metrics</li>
+                    </ul>
+                    <p class="service-duration">3-6 month engagement</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🌟</div>
+                    <h3 class="service-title">Culture Design & Implementation</h3>
+                    <p class="service-description">
+                        Design and implement intentional cultures that attract talent and drive performance.
+                    </p>
+                    <ul class="service-features">
+                        <li>Culture audit and assessment</li>
+                        <li>Values definition and integration</li>
+                        <li>Behavior and system alignment</li>
+                        <li>Employee engagement strategies</li>
+                        <li>Culture measurement tools</li>
+                    </ul>
+                    <p class="service-duration">6-9 month engagement</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3 class="service-title">AI-Era Leadership Preparation</h3>
+                    <p class="service-description">
+                        Prepare your leadership team for the AI-augmented future of work and human-AI collaboration.
+                    </p>
+                    <ul class="service-features">
+                        <li>Future of work strategy</li>
+                        <li>Human-AI collaboration frameworks</li>
+                        <li>Leadership skill development</li>
+                        <li>Change management for AI adoption</li>
+                        <li>Ethical AI leadership training</li>
+                    </ul>
+                    <p class="service-duration">3-6 month engagement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section process">
+        <div class="container">
+            <h2 class="section-title">Our Process</h2>
+            <p class="section-subtitle">
+                A proven methodology that ensures sustainable transformation and measurable results
+            </p>
+            
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="process-number">1</div>
+                    <h3 class="process-title">Discover</h3>
+                    <p class="process-description">Deep organizational assessment, stakeholder interviews, and current state analysis to understand your unique challenges and opportunities.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-number">2</div>
+                    <h3 class="process-title">Design</h3>
+                    <p class="process-description">Custom framework development, solution design, and roadmap creation tailored to your organization's culture and goals.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-number">3</div>
+                    <h3 class="process-title">Develop</h3>
+                    <p class="process-description">Implementation support, skill building, coaching, and system integration with your existing processes and tools.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-number">4</div>
+                    <h3 class="process-title">Deploy</h3>
+                    <p class="process-description">Full rollout, change management, communication strategy, and ongoing support to ensure adoption and success.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="process-number">5</div>
+                    <h3 class="process-title">Deliver</h3>
+                    <p class="process-description">Results measurement, continuous improvement, sustainability planning, and knowledge transfer to your internal teams.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="section results">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Proven Results</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+                Real outcomes from organizations that have embraced guide-first leadership
+            </p>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number">52%</div>
+                    <div class="result-label">Turnover Reduction</div>
+                    <div class="result-description">Average reduction in employee turnover after implementing Sherpa Leadership principles</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number">28%</div>
+                    <div class="result-label">Revenue Increase</div>
+                    <div class="result-description">Average revenue growth in organizations with guide-first leadership cultures</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number">45+</div>
+                    <div class="result-label">Organizations</div>
+                    <div class="result-description">Successfully guided through transformation processes and leadership development</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number">$4.2M</div>
+                    <div class="result-label">New Funding</div>
+                    <div class="result-description">Secured by nonprofit clients through improved organizational effectiveness</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number">1,200+</div>
+                    <div class="result-label">Leaders Trained</div>
+                    <div class="result-description">Professionals equipped with Sherpa methodology and guide-first leadership skills</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-number">34%</div>
+                    <div class="result-label">Engagement Boost</div>
+                    <div class="result-description">Average increase in employee engagement scores within six months</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section case-studies">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <p class="section-subtitle">
+                Real transformations from organizations that chose the guide-first path
+            </p>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-icon">🏠</div>
+                    <div class="case-study-title">Haven House Services</div>
+                    <div class="case-study-type">Nonprofit</div>
+                </div>
+                <div class="case-study-content">
+                    <p><strong>Challenge:</strong> Struggling nonprofit facing potential closure during pandemic, with declining services and low staff morale.</p>
+                    <p><strong>Solution:</strong> Implemented Sherpa Leadership transformation focusing on guide-first culture, staff development, and operational efficiency.</p>
+                    <p><strong>Results:</strong> Expanded services by 40% during the pandemic while others were closing. Improved staff retention by 60% and secured $800K in new funding.</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-icon">💼</div>
+                    <div class="case-study-title">Microsoft Team</div>
+                    <div class="case-study-type">Technology</div>
+                </div>
+                <div class="case-study-content">
+                    <p><strong>Challenge:</strong> High-performing team struggling with burnout, communication issues, and declining engagement scores.</p>
+                    <p><strong>Solution:</strong> Leadership team development program with focus on guide-first leadership and sustainable performance.</p>
+                    <p><strong>Results:</strong> Team engagement scores increased 34% in six months. Reduced overtime by 25% while maintaining productivity levels.</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <div class="case-study-header">
+                    <div class="case-study-icon">🚀</div>
+                    <div class="case-study-title">TechForward Solutions</div>
+                    <div class="case-study-type">Startup</div>
+                </div>
+                <div class="case-study-content">
+                    <p><strong>Challenge:</strong> Fast-growing startup struggling to scale leadership and maintain culture during rapid expansion.</p>
+                    <p><strong>Solution:</strong> Vision to execution bridge program with culture design and leadership development.</p>
+                    <p><strong>Results:</strong> Successfully scaled from 50 to 200 employees while improving culture scores. Achieved 28% revenue growth and secured Series B funding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Start Your Transformation</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+                Ready to transform your organization? Let's discuss how we can guide your journey from vision to execution.
+            </p>
+            
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Your Name" required>
+                    <input type="email" class="form-input" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Organization" required>
+                    <select class="form-select" required>
+                        <option value="">Select Service Interest</option>
+                        <option value="sherpa-transformation">Sherpa Leadership Transformation</option>
+                        <option value="vision-execution">Vision to Execution Bridge</option>
+                        <option value="transition-leadership">Transition Leadership</option>
+                        <option value="team-development">Leadership Team Development</option>
+                        <option value="culture-design">Culture Design & Implementation</option>
+                        <option value="ai-leadership">AI-Era Leadership Preparation</option>
+                        <option value="custom">Custom Engagement</option>
+                    </select>
+                </div>
+                <textarea class="form-textarea" placeholder="Tell us about your organization, current challenges, and what transformation you're seeking..." required></textarea>
+                <button type="submit" class="btn btn-primary" style="justify-self: center; max-width: 300px;">Request Consultation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/davidrunnels/">LinkedIn</a>
+            <a href="mailto:info@sherpaeconomy.com">Email</a>
+            <a href="speaking.html">Speaking</a>
+            <a href="consulting.html">Consulting</a>
+        </div>
+        <p>&copy; 2025 David Runnels | Stories & Systems</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your consultation request! David will respond within 24 hours to schedule your discovery call.');
+            this.reset();
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 58, 82, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards
+        document.querySelectorAll('.service-card, .process-step, .case-study').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

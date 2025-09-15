@@ -363,8 +363,85 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
         }
         
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Floating Elements Animation */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -377,6 +454,21 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html" class="active">Home</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="consulting.html">Consulting</a></li>
+                <li><a href="sherpa-assessment.html">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
     <section class="hero">
         <div class="mountain-bg"></div>
@@ -498,14 +590,30 @@
         <div class="social-links">
             <a href="https://www.linkedin.com/in/davidrunnels/">LinkedIn</a>
             <a href="mailto:info@sherpaeconomy.com">Email</a>
-            <a href="https://storiessystems.com/speaking">Speaking</a>
-            <a href="https://storiessystems.com/consulting">Consulting</a>
+            <a href="speaking.html">Speaking</a>
+            <a href="consulting.html">Consulting</a>
         </div>
         <p>&copy; 2025 David Runnels | Stories & Systems</p>
         <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
     </footer>
     
     <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 58, 82, 0.95)';
+            }
+        });
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
