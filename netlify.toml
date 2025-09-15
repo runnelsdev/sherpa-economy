@@ -1,0 +1,28 @@
+[build]
+  # No build command needed for static HTML files
+  publish = "."
+
+[[redirects]]
+  # Redirect root to landing page
+  from = "/"
+  to = "/sherpa-economy-landing.html"
+  status = 200
+
+[[redirects]]
+  # Redirect /assessment to assessment page
+  from = "/assessment"
+  to = "/sherpa-assessment.html"
+  status = 200
+
+[[headers]]
+  # Security headers for all pages
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Enable form handling for any forms in your HTML
+[build.environment]
+  NODE_VERSION = "18"
