@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe Test Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        #payment-element {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            min-height: 60px;
+        }
+        
+        button {
+            background: #e67e22;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background: #d35400;
+        }
+        
+        .error {
+            color: red;
+            margin: 10px 0;
+        }
+        
+        .success {
+            color: green;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stripe Integration Test</h1>
+    
+    <div class="test-section">
+        <h3>Step 1: Check Stripe Initialization</h3>
+        <p id="stripe-status">Checking...</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Step 2: Create Payment Intent</h3>
+        <button onclick="createTestPayment()">Create Test Payment</button>
+        <p id="payment-status"></p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Step 3: Mount Payment Element</h3>
+        <div id="payment-element">
+            <!-- Stripe Elements will create form elements here -->
+        </div>
+        <p id="element-status"></p>
+    </div>
+    
+    <div class="test-section">
+        <h3>Console Output</h3>
+        <p>Check browser console (F12) for detailed logs</p>
+    </div>
+
+    <script>
+        // Test Stripe initialization
+        const STRIPE_PUBLISHABLE_KEY = 'pk_live_AwTlcHPBYYURE75CNMwpq6XE';
+        let stripe;
+        let elements;
+        let paymentElement;
+        
+        try {
+            stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+            document.getElementById('stripe-status').innerHTML = '<span class="success">✓ Stripe initialized successfully</span>';
+            console.log('Stripe initialized:', stripe);
+        } catch (error) {
+            document.getElementById('stripe-status').innerHTML = '<span class="error">✗ Stripe initialization failed: ' + error.message + '</span>';
+            console.error('Stripe initialization error:', error);
+        }
+        
+        async function createTestPayment() {
+            try {
+                document.getElementById('payment-status').innerHTML = 'Creating payment intent...';
+                console.log('Creating test payment intent...');
+                
+                const response = await fetch('/.netlify/functions/create-payment-intent', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        product: 'course',
+                        customer: {
+                            name: 'Test User',
+                            email: 'test@example.com'
+                        },
+                        amount: 19900,
+                        currency: 'usd',
+                        courseData: {
+                            tier: 'pilot'
+                        }
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Payment creation failed: ${errorData.error || response.statusText}`);
+                }
+                
+                const { clientSecret } = await response.json();
+                console.log('Client secret received:', clientSecret);
+                
+                document.getElementById('payment-status').innerHTML = '<span class="success">✓ Payment intent created successfully</span>';
+                
+                // Create and mount Stripe Elements
+                await mountStripeElements(clientSecret);
+                
+            } catch (error) {
+                console.error('Payment creation error:', error);
+                document.getElementById('payment-status').innerHTML = '<span class="error">✗ Payment creation failed: ' + error.message + '</span>';
+            }
+        }
+        
+        async function mountStripeElements(clientSecret) {
+            try {
+                document.getElementById('element-status').innerHTML = 'Mounting payment element...';
+                console.log('Mounting Stripe Elements...');
+                
+                const appearance = {
+                    theme: 'stripe',
+                    variables: {
+                        colorPrimary: '#e67e22',
+                        colorBackground: '#ffffff',
+                        colorText: '#1a3a52',
+                        fontFamily: 'Arial, sans-serif',
+                        spacingUnit: '4px',
+                        borderRadius: '8px',
+                    }
+                };
+                
+                elements = stripe.elements({
+                    clientSecret: clientSecret,
+                    appearance: appearance
+                });
+                
+                paymentElement = elements.create('payment');
+                console.log('Payment element created:', paymentElement);
+                
+                const paymentElementContainer = document.getElementById('payment-element');
+                if (paymentElementContainer) {
+                    await paymentElement.mount('#payment-element');
+                    console.log('Payment element mounted successfully');
+                    document.getElementById('element-status').innerHTML = '<span class="success">✓ Payment element mounted successfully</span>';
+                } else {
+                    throw new Error('Payment element container not found');
+                }
+                
+            } catch (error) {
+                console.error('Element mounting error:', error);
+                document.getElementById('element-status').innerHTML = '<span class="error">✗ Element mounting failed: ' + error.message + '</span>';
+            }
+        }
+    </script>
+</body>
+</html>

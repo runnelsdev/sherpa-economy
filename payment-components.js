@@ -105,11 +105,14 @@ class PaymentComponents {
     // Initialize payment process
     async initializePayment(productType, productInfo) {
         try {
+            console.log('Initializing payment for:', productType, productInfo);
+            
             // Show loading state
             this.showLoading();
 
             // Get customer information from form
             const customerInfo = this.getCustomerInfo(productType);
+            console.log('Customer info:', customerInfo);
 
             // Create payment intent based on product type
             let clientSecret;
@@ -139,7 +142,13 @@ class PaymentComponents {
             this.currentPaymentElement = paymentElement;
 
             // Mount the payment element
-            paymentElement.mount('#payment-element');
+            const paymentElementContainer = document.getElementById('payment-element');
+            if (paymentElementContainer) {
+                paymentElement.mount('#payment-element');
+                console.log('Stripe Elements mounted successfully');
+            } else {
+                throw new Error('Payment element container not found');
+            }
 
             // Hide loading state
             this.hideLoading();
@@ -241,8 +250,8 @@ class PaymentComponents {
         // Add CSS classes for animation
         setTimeout(() => modal.classList.add('active'), 10);
 
-        // Initialize payment after modal is shown
-        setTimeout(() => this.initializePayment(productType, productInfo), 100);
+        // Initialize payment after modal is shown and DOM is ready
+        setTimeout(() => this.initializePayment(productType, productInfo), 300);
 
         // Add form submission handler
         const form = document.getElementById('payment-form');

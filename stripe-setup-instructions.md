@@ -30,9 +30,9 @@ const STRIPE_PUBLISHABLE_KEY = 'pk_test_...'; // Replace with your actual publis
 ### Set Environment Variables
 Create a `.env` file in your project root with:
 ```
-STRIPE_PUBLISHABLE_KEY=pk_test_...  # Your publishable key
-STRIPE_SECRET_KEY=sk_test_...       # Your secret key
-STRIPE_WEBHOOK_SECRET=whsec_...     # Webhook secret (see step 4)
+STRIPE_PUBLISHABLE_KEY=pk_live_AwTlcHPBYYURE75CNMwpq6XE  # Your live publishable key
+STRIPE_SECRET_KEY=sk_live_SDimTmsQzRG8I4L9K37mEpU4       # Your live secret key
+STRIPE_WEBHOOK_SECRET=whsec_...                          # Webhook secret (see step 4)
 ```
 
 ## 3. Install Dependencies

@@ -1,6 +1,6 @@
 // Stripe Configuration
-// Replace with your actual Stripe publishable key
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_...'; // You'll need to replace this with your actual key
+// Live Stripe publishable key
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_AwTlcHPBYYURE75CNMwpq6XE';
 
 // Initialize Stripe
 const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
@@ -48,7 +48,7 @@ class StripePayments {
     // Create payment intent for book pre-order
     async createBookPayment(customerInfo) {
         try {
-            const response = await fetch('/api/create-payment-intent', {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,13 @@ class StripePayments {
                 })
             });
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Payment creation failed: ${errorData.error || response.statusText}`);
+            }
+
             const { clientSecret } = await response.json();
+            console.log('Payment intent created successfully');
             return clientSecret;
         } catch (error) {
             console.error('Error creating book payment:', error);
@@ -72,7 +78,7 @@ class StripePayments {
     // Create payment intent for consulting services
     async createConsultationPayment(customerInfo, serviceType) {
         try {
-            const response = await fetch('/api/create-payment-intent', {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -86,7 +92,13 @@ class StripePayments {
                 })
             });
 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Payment creation failed: ${errorData.error || response.statusText}`);
+            }
+
             const { clientSecret } = await response.json();
+            console.log('Consultation payment intent created successfully');
             return clientSecret;
         } catch (error) {
             console.error('Error creating consultation payment:', error);
@@ -97,7 +109,7 @@ class StripePayments {
     // Create payment intent for speaking engagements
     async createSpeakingPayment(customerInfo, eventDetails) {
         try {
-            const response = await fetch('/api/create-payment-intent', {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -122,7 +134,7 @@ class StripePayments {
     // Create payment intent for assessment report
     async createAssessmentPayment(customerInfo, assessmentData) {
         try {
-            const response = await fetch('/api/create-payment-intent', {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,7 +159,7 @@ class StripePayments {
     // Create payment intent for course enrollment
     async createCoursePayment(customerInfo, courseData) {
         try {
-            const response = await fetch('/api/create-payment-intent', {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
