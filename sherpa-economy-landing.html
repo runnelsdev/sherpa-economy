@@ -379,7 +379,16 @@
             }
 
             .menu-toggle {
-                display: block;
+                display: block !important;
+                position: relative;
+                z-index: 1001;
+                background: rgba(26, 58, 82, 0.95);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 6px;
+                min-width: 48px;
+                min-height: 48px;
+                font-size: 1.8rem;
+                font-weight: bold;
             }
 
             .nav-links {
@@ -394,6 +403,7 @@
                 padding: 1rem 0;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
+                z-index: 1000;
             }
 
             .nav-links.active {
@@ -422,6 +432,10 @@
             .nav-links a.active {
                 color: var(--accent);
                 background: rgba(230, 126, 34, 0.1);
+            }
+
+            .nav-container {
+                position: relative;
             }
 
             .hero {
@@ -514,6 +528,7 @@
             cursor: pointer;
             padding: 0.5rem;
             transition: color 0.3s ease;
+            outline: none;
         }
 
         .menu-toggle:hover {
@@ -870,6 +885,18 @@
                 navLinks.classList.remove('active');
                 menuToggle.innerHTML = '☰';
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const nav = document.querySelector('.nav');
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '☰';
+            }
         });
 
         // Navbar scroll effect
