@@ -59,12 +59,16 @@ Add the webhook secret to your environment variables.
 
 ## 5. Deploy to Netlify
 
-### Set Environment Variables in Netlify
+### 🔐 CRITICAL: Set Environment Variables in Netlify
+**SECURITY WARNING**: Never put your secret key in client-side code!
+
 1. Go to your Netlify site dashboard
-2. Go to Site settings > Environment variables
-3. Add these variables:
-   - `STRIPE_SECRET_KEY`: Your Stripe secret key
-   - `STRIPE_WEBHOOK_SECRET`: Your webhook signing secret
+2. Go to **Site settings** → **Environment variables**
+3. Add these variables (EXACT NAMES REQUIRED):
+   - `STRIPE_SECRET_KEY`: `sk_live_SDimTmsQzRG8I4L9K37mEpU4`
+   - `STRIPE_WEBHOOK_SECRET`: Your webhook signing secret (from step 4)
+
+**⚠️ IMPORTANT**: The secret key should ONLY exist in Netlify environment variables, never in your code files!
 
 ### Deploy
 Your site will automatically deploy when you push changes to your repository.
@@ -97,12 +101,31 @@ The webhook handler includes email notification functions that you can implement
 
 Update the email functions in `netlify/functions/stripe-webhook.js` to integrate with your email service.
 
-## 9. Security Considerations
+## 9. 🔐 Security Considerations - CRITICAL
 
-- Never expose your secret key in client-side code
-- Always validate webhook signatures
-- Use HTTPS in production
-- Store sensitive data securely
+### **✅ What's SECURE in Your Current Setup:**
+- Secret key is ONLY in server-side Netlify Functions
+- Client-side code only uses publishable key (safe to expose)
+- Webhooks verify signatures to prevent tampering
+- All payment processing happens server-side
+
+### **🚨 NEVER DO THESE:**
+- ❌ Put `sk_live_...` or `sk_test_...` in any JavaScript file
+- ❌ Commit secret keys to Git/GitHub
+- ❌ Store secrets in `.env` files that get committed
+- ❌ Use secret keys in browser console or client-side
+
+### **✅ Security Verification:**
+1. Search your codebase for `sk_live_` - should find ZERO results in client files
+2. Check browser developer tools - no secret keys should be visible
+3. Verify environment variables are set in Netlify dashboard
+4. Test that webhooks verify signatures properly
+
+### **🆘 If Secret Key is Compromised:**
+1. Immediately regenerate it in Stripe Dashboard
+2. Update Netlify environment variable
+3. Deploy your site
+4. Test everything still works
 
 ## 10. Testing Checklist
 

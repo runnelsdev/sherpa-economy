@@ -1,4 +1,6 @@
 // Stripe Configuration
+// ✅ SECURITY: Only publishable key here - safe to expose in client-side code
+// 🔐 SECRET KEY is stored securely in Netlify environment variables (server-side only)
 // Live Stripe publishable key
 const STRIPE_PUBLISHABLE_KEY = 'pk_live_AwTlcHPBYYURE75CNMwpq6XE';
 
