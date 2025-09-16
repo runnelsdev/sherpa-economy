@@ -449,6 +449,14 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            color: var(--accent);
+        }
+            cursor: pointer;
         }
 
         /* Responsive */
@@ -463,13 +471,40 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: var(--primary);
+                background: rgba(26, 58, 82, 0.98);
+                backdrop-filter: blur(10px);
                 flex-direction: column;
-                padding: 1rem;
+                padding: 1rem 0;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .nav-links.active {
                 display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 2rem;
+                color: rgba(255, 255, 255, 0.9);
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links a:hover,
+            .nav-links a.active {
+                color: var(--accent);
+                background: rgba(230, 126, 34, 0.1);
             }
             .container {
                 padding: 1rem;
@@ -958,8 +993,28 @@
         // Mobile menu toggle
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
             navLinks.classList.toggle('active');
+            
+            // Change hamburger to X when menu is open
+            if (navLinks.classList.contains('active')) {
+                menuToggle.innerHTML = '✕';
+            } else {
+                menuToggle.innerHTML = '☰';
+            }
         }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navLinks = document.getElementById('navLinks');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '☰';
+            });
+        });
     </script>
     
     <!-- Load Stripe configuration and payment components -->
