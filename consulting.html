@@ -491,8 +491,37 @@
             color: var(--accent);
         }
 
-        /* Responsive */
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            color: var(--accent);
+        }
+
         @media (max-width: 1024px) {
+            .menu-toggle {
+                display: block !important;
+                position: relative;
+                z-index: 1001;
+                background: rgba(26, 58, 82, 0.95);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 6px;
+                min-width: 48px;
+                min-height: 48px;
+                font-size: 1.8rem;
+                font-weight: bold;
+            }
+
             .cta-container {
                 flex-direction: column;
                 align-items: center;
@@ -510,39 +539,6 @@
             .case-study-header {
                 grid-template-columns: 1fr;
                 text-align: center;
-            }
-        }
-
-        /* Mobile Menu Toggle */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            color: var(--accent);
-        }
-            cursor: pointer;
-        }
-
-        @media (max-width: 1024px) {
-            .menu-toggle {
-                display: block !important;
-                position: relative;
-                z-index: 1001;
-                background: rgba(26, 58, 82, 0.95);
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                border-radius: 6px;
-                min-width: 48px;
-                min-height: 48px;
-                font-size: 1.8rem;
-                font-weight: bold;
             }
 
             .nav-links {
@@ -938,36 +934,33 @@
     </footer>
 
     <script>
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing mobile menu...');
+        // Mobile menu toggle function - available immediately
+        function toggleMenu() {
+            console.log('toggleMenu called');
+            const navLinks = document.getElementById('navLinks');
+            const menuToggle = document.querySelector('.menu-toggle');
             
-            // Mobile menu toggle
-            function toggleMenu() {
-                console.log('toggleMenu called');
-                const navLinks = document.getElementById('navLinks');
-                const menuToggle = document.querySelector('.menu-toggle');
-                
-                if (!navLinks || !menuToggle) {
-                    console.error('Navigation elements not found:', { navLinks, menuToggle });
-                    return;
-                }
-                
-                navLinks.classList.toggle('active');
-                console.log('Menu active state:', navLinks.classList.contains('active'));
-                
-                // Change hamburger to X when menu is open
-                if (navLinks.classList.contains('active')) {
-                    menuToggle.innerHTML = '✕';
-                    console.log('Changed to close icon');
-                } else {
-                    menuToggle.innerHTML = '☰';
-                    console.log('Changed to hamburger icon');
-                }
+            if (!navLinks || !menuToggle) {
+                console.error('Navigation elements not found:', { navLinks, menuToggle });
+                return;
             }
             
-            // Make toggleMenu globally available
-            window.toggleMenu = toggleMenu;
+            navLinks.classList.toggle('active');
+            console.log('Menu active state:', navLinks.classList.contains('active'));
+            
+            // Change hamburger to X when menu is open
+            if (navLinks.classList.contains('active')) {
+                menuToggle.innerHTML = '✕';
+                console.log('Changed to close icon');
+            } else {
+                menuToggle.innerHTML = '☰';
+                console.log('Changed to hamburger icon');
+            }
+        }
+        
+        // Wait for DOM to be fully loaded for additional setup
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing mobile menu...');
             
             // Initialize menu state - ensure it starts closed
             const navLinks = document.getElementById('navLinks');
@@ -978,13 +971,16 @@
                 menuToggle.innerHTML = '☰';
                 console.log('Menu initialized in closed state');
                 
-                // Add direct event listener as backup
+                // Add direct event listener as primary method (more reliable than onclick)
                 menuToggle.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    console.log('Button clicked directly');
+                    console.log('Button clicked via event listener');
                     toggleMenu();
                 });
+                
+                // Test if function is working
+                console.log('toggleMenu function available:', typeof window.toggleMenu);
             }
 
             // Close mobile menu when clicking on a link
