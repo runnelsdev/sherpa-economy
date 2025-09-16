@@ -702,16 +702,18 @@
                 Ready to transform your organization with guide-first leadership? Let's discuss how David can serve your audience.
             </p>
             
-            <form class="contact-form">
+            <form class="contact-form" name="speaking-inquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+                <input type="hidden" name="form-name" value="speaking-inquiry">
+                <input type="hidden" name="bot-field">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Your Name" required>
-                    <input type="email" class="form-input" placeholder="Email Address" required>
+                    <input type="text" name="name" class="form-input" placeholder="Your Name" required>
+                    <input type="email" name="email" class="form-input" placeholder="Email Address" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Organization" required>
-                    <input type="text" class="form-input" placeholder="Event Date" required>
+                    <input type="text" name="organization" class="form-input" placeholder="Organization" required>
+                    <input type="text" name="event-date" class="form-input" placeholder="Event Date" required>
                 </div>
-                <textarea class="form-textarea" placeholder="Tell us about your event, audience size, format preferences, and how we can help..." required></textarea>
+                <textarea name="message" class="form-textarea" placeholder="Tell us about your event, audience size, format preferences, and how we can help..." required></textarea>
                 <button type="submit" class="btn btn-primary" style="justify-self: center; max-width: 300px;">Send Speaking Inquiry</button>
             </form>
         </div>
@@ -750,12 +752,8 @@
             });
         });
 
-        // Form submission handler
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your speaking inquiry! David will respond within 24 hours.');
-            this.reset();
-        });
+        // Form submission handler - Netlify will handle the submission
+        // No need to prevent default, let Netlify process the form
 
         // Navbar scroll effect
         window.addEventListener('scroll', function() {

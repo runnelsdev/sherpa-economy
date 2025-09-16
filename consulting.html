@@ -823,14 +823,16 @@
                 Ready to transform your organization? Let's discuss how we can guide your journey from vision to execution.
             </p>
             
-            <form class="contact-form">
+            <form class="contact-form" name="consultation-request" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+                <input type="hidden" name="form-name" value="consultation-request">
+                <input type="hidden" name="bot-field">
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Your Name" required>
-                    <input type="email" class="form-input" placeholder="Email Address" required>
+                    <input type="text" name="name" class="form-input" placeholder="Your Name" required>
+                    <input type="email" name="email" class="form-input" placeholder="Email Address" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Organization" required>
-                    <select class="form-select" required>
+                    <input type="text" name="organization" class="form-input" placeholder="Organization" required>
+                    <select name="service-interest" class="form-select" required>
                         <option value="">Select Service Interest</option>
                         <option value="sherpa-transformation">Sherpa Leadership Transformation</option>
                         <option value="vision-execution">Vision to Execution Bridge</option>
@@ -841,7 +843,7 @@
                         <option value="custom">Custom Engagement</option>
                     </select>
                 </div>
-                <textarea class="form-textarea" placeholder="Tell us about your organization, current challenges, and what transformation you're seeking..." required></textarea>
+                <textarea name="message" class="form-textarea" placeholder="Tell us about your organization, current challenges, and what transformation you're seeking..." required></textarea>
                 <button type="submit" class="btn btn-primary" style="justify-self: center; max-width: 300px;">Request Consultation</button>
             </form>
         </div>
@@ -880,12 +882,8 @@
             });
         });
 
-        // Form submission handler
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your consultation request! David will respond within 24 hours to schedule your discovery call.');
-            this.reset();
-        });
+        // Form submission handler - Netlify will handle the submission
+        // No need to prevent default, let Netlify process the form
 
         // Navbar scroll effect
         window.addEventListener('scroll', function() {

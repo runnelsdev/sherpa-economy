@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Sherpa Economy</title>
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e67e22">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 58, 82, 0.9), rgba(26, 58, 82, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-container {
+            text-align: center;
+            padding: 3rem 2rem;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: white;
+            animation: bounce 1s ease-out 0.5s both;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .next-steps {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .next-steps h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .next-steps li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .next-steps li:before {
+            content: "✓";
+            color: var(--accent);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            margin: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .social-proof {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .social-proof p {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">🏔️</div>
+        <h1>Thank You!</h1>
+        <p class="subtitle">
+            Your message has been received and David will personally respond within 24 hours. 
+            Thank you for your interest in guide-first leadership.
+        </p>
+
+        <div class="next-steps">
+            <h3>What Happens Next?</h3>
+            <ul>
+                <li>David will review your inquiry personally</li>
+                <li>You'll receive a response within 24 hours</li>
+                <li>We'll schedule a brief discovery call if it's a good fit</li>
+                <li>You'll receive exclusive resources in the meantime</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="sherpa-economy-landing.html" class="btn btn-primary">Return Home</a>
+            <a href="sherpa-assessment.html" class="btn btn-secondary">Take the Assessment</a>
+        </div>
+
+        <div class="social-proof">
+            <p>"The summit isn't the point—the people you bring with you are."</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-redirect after 30 seconds
+        setTimeout(function() {
+            window.location.href = 'sherpa-economy-landing.html';
+        }, 30000);
+    </script>
+</body>
+</html>

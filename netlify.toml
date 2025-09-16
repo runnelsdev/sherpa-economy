@@ -57,3 +57,16 @@
 # Enable form handling for any forms in your HTML
 [build.environment]
   NODE_VERSION = "18"
+
+# Form submission success page
+[[redirects]]
+  from = "/success"
+  to = "/success.html"
+  status = 200
+
+# Netlify form notifications
+[forms]
+  # Enable form notifications
+  [forms.notifications]
+    # Send email notifications for form submissions
+    email = "info@sherpaeconomy.com"

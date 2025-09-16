@@ -587,8 +587,10 @@
         <div class="container">
             <h2 class="section-title" style="color: white;">Join the Sherpa Economy Movement</h2>
             <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.9);">Get exclusive excerpts, leadership insights, and early access to the Sherpa Leadership Certification</p>
-            <form class="newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+            <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/success">
+                <input type="hidden" name="form-name" value="newsletter">
+                <input type="hidden" name="bot-field">
+                <input type="email" name="email" class="newsletter-input" placeholder="Enter your email address" required>
                 <button type="submit" class="btn btn-primary">Join 2,400+ Leaders</button>
             </form>
         </div>
@@ -637,12 +639,8 @@
             });
         });
         
-        // Form submission handler
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for joining the Sherpa Economy movement! Check your email for confirmation.');
-            this.reset();
-        });
+        // Form submission handler - Netlify will handle the submission
+        // No need to prevent default, let Netlify process the form
         
         // Intersection Observer for animations
         const observerOptions = {
