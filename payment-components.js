@@ -31,8 +31,8 @@ class PaymentComponents {
                         <form id="payment-form" class="payment-form">
                             <div class="customer-info">
                                 <div class="form-row">
-                                    <input type="text" id="customer-name" placeholder="Full Name" required>
-                                    <input type="email" id="customer-email" placeholder="Email Address" required>
+                                    <input type="text" id="customer-name" placeholder="Full Name" autocomplete="name" required>
+                                    <input type="email" id="customer-email" placeholder="Email Address" autocomplete="email" required>
                                 </div>
                                 ${productType === 'consultation' ? this.getConsultationFields() : ''}
                                 ${productType === 'speaking' ? this.getSpeakingFields() : ''}
@@ -64,7 +64,7 @@ class PaymentComponents {
     getConsultationFields() {
         return `
             <div class="form-row">
-                <input type="text" id="organization" placeholder="Organization" required>
+                <input type="text" id="organization" placeholder="Organization" autocomplete="organization" required>
                 <select id="service-type" required>
                     <option value="">Select Service</option>
                     <option value="sherpa-transformation">Sherpa Leadership Transformation</option>
@@ -83,11 +83,11 @@ class PaymentComponents {
     getSpeakingFields() {
         return `
             <div class="form-row">
-                <input type="text" id="event-name" placeholder="Event Name" required>
-                <input type="date" id="event-date" placeholder="Event Date" required>
+                <input type="text" id="event-name" placeholder="Event Name" autocomplete="off" required>
+                <input type="date" id="event-date" placeholder="Event Date" autocomplete="off" required>
             </div>
             <div class="form-row">
-                <input type="text" id="audience-size" placeholder="Expected Audience Size">
+                <input type="text" id="audience-size" placeholder="Expected Audience Size" autocomplete="off">
                 <select id="format-type">
                     <option value="">Select Format</option>
                     <option value="keynote">Keynote (45-60 min)</option>

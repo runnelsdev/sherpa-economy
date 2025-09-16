@@ -430,6 +430,13 @@
             gap: 2rem;
             list-style: none;
         }
+        
+        /* Hide desktop navigation on mobile/tablet */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none !important;
+            }
+        }
 
         .nav-links a {
             color: rgba(255, 255, 255, 0.9);
@@ -460,7 +467,7 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .menu-toggle {
                 display: block !important;
                 position: relative;
