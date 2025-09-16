@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sherpa Economy Foundations Course - Transform Your Leadership</title>
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e67e22">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success: #27ae60;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(26, 58, 82, 0.9), rgba(26, 58, 82, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            padding-top: 80px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tagline {
+            color: var(--accent);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transform: scale(1);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--light);
+            text-align: center;
+        }
+
+        .problem-text {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        .problem-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-highlight {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 2rem 0;
+        }
+
+        /* Promise Section */
+        .promise {
+            background: white;
+        }
+
+        .promise-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .promise-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+
+        .promise-icon {
+            color: var(--success);
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+        }
+
+        .promise-text {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+
+        /* Target Audience */
+        .audience {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .audience-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .audience-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .audience-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .audience-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modules Section */
+        .modules {
+            background: var(--light);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .module-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--accent);
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .module-number {
+            background: var(--gradient);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .module-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Includes Section */
+        .includes {
+            background: white;
+        }
+
+        .includes-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .include-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .include-item:hover {
+            transform: translateX(10px);
+        }
+
+        .include-icon {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        .include-text {
+            font-size: 1.1rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-card {
+            background: white;
+            color: var(--dark);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid var(--accent);
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+            color: #666;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: var(--light);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: var(--light);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Closing Section */
+        .closing {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .closing-quote {
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .closing-cta {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="foundations-course.html" class="active">Foundations Course</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="consulting.html">Consulting</a></li>
+                <li><a href="sherpa-assessment.html">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="tagline">Foundations Course</p>
+            <h1>Your Experience is Someone Else's Map</h1>
+            <p class="subtitle">Discover your inner Sherpa and learn how to guide others with clarity, service, and resilience in today's economy.</p>
+            <div class="cta-container">
+                <button class="btn btn-primary" onclick="showCoursePayment('pilot')">👉 Enroll in Sherpa Economy Foundations Today</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="section problem">
+        <div class="container">
+            <div class="problem-text">
+                <p><strong>We live in an age of noise.</strong></p>
+                <p>Everyone is shouting advice, selling shortcuts, and pointing at the summit.</p>
+                <p class="problem-highlight">But people don't need another guru.<br>They need someone they can trust to walk with them.</p>
+                <p><strong>They need a Sherpa.</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promise Section -->
+    <section class="section promise">
+        <div class="container">
+            <h2 class="section-title">The Sherpa Economy Foundations Course will help you:</h2>
+            <div class="promise-list">
+                <div class="promise-item">
+                    <div class="promise-icon">✅</div>
+                    <div class="promise-text">Identify your strongest Sherpa traits (service, resilience, humility, clarity, trust)</div>
+                </div>
+                <div class="promise-item">
+                    <div class="promise-icon">✅</div>
+                    <div class="promise-text">Build your personal "Sherpa Blueprint" to guide others effectively</div>
+                </div>
+                <div class="promise-item">
+                    <div class="promise-icon">✅</div>
+                    <div class="promise-text">Gain tools for mentoring, coaching, and leadership rooted in service</div>
+                </div>
+                <div class="promise-item">
+                    <div class="promise-icon">✅</div>
+                    <div class="promise-text">Walk away with confidence that your story can be someone else's map</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience -->
+    <section class="section audience">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Who This is For</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">This course is designed for:</p>
+            <div class="audience-list">
+                <div class="audience-item">
+                    <div class="audience-icon">🎯</div>
+                    <div class="audience-title">Coaches & Consultants</div>
+                    <p>Who want to deepen their impact</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">👥</div>
+                    <div class="audience-title">Leaders & Managers</div>
+                    <p>Seeking service-first influence</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">📚</div>
+                    <div class="audience-title">Teachers & Mentors</div>
+                    <p>Pastors, or parents ready to guide with confidence</p>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-icon">🏔️</div>
+                    <div class="audience-title">Called to Help</div>
+                    <p>Anyone who feels called to help others climb their mountains</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="section modules">
+        <div class="container">
+            <h2 class="section-title">Course Modules (At a Glance)</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-number">1</div>
+                    <h3 class="module-title">Welcome to the Sherpa Economy</h3>
+                    <p class="module-description">Understanding the shift from guru culture to guide-first leadership in today's world.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">2</div>
+                    <h3 class="module-title">The Sherpa Way — Values in Action</h3>
+                    <p class="module-description">Exploring the core values of service, resilience, humility, clarity, and trust.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">3</div>
+                    <h3 class="module-title">Discovering Your Inner Sherpa</h3>
+                    <p class="module-description">Identifying your unique strengths and natural guiding abilities.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">4</div>
+                    <h3 class="module-title">The Sherpa Mindset for Leadership</h3>
+                    <p class="module-description">Developing the mental framework for effective guide-first leadership.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">5</div>
+                    <h3 class="module-title">Building Your Sherpa Blueprint</h3>
+                    <p class="module-description">Creating your personalized approach to guiding others effectively.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">6</div>
+                    <h3 class="module-title">Guiding Others in the Sherpa Economy</h3>
+                    <p class="module-description">Practical tools and techniques for mentoring and coaching with impact.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">7</div>
+                    <h3 class="module-title">Expanding Your Sherpa Impact</h3>
+                    <p class="module-description">Scaling your influence and building systems for sustainable guidance.</p>
+                </div>
+                <div class="module-card">
+                    <div class="module-number">8</div>
+                    <h3 class="module-title">Living the Sherpa Economy</h3>
+                    <p class="module-description">Integrating Sherpa principles into every aspect of your life and work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section class="section includes">
+        <div class="container">
+            <h2 class="section-title">What's Included</h2>
+            <div class="includes-list">
+                <div class="include-item">
+                    <div class="include-icon">🎥</div>
+                    <div class="include-text">8 Learning Modules (video + exercises)</div>
+                </div>
+                <div class="include-item">
+                    <div class="include-icon">📋</div>
+                    <div class="include-text">Interactive Workbook + Templates</div>
+                </div>
+                <div class="include-item">
+                    <div class="include-icon">📄</div>
+                    <div class="include-text">Personalized Sherpa Growth Plan PDF</div>
+                </div>
+                <div class="include-item">
+                    <div class="include-icon">👥</div>
+                    <div class="include-text">Access to the Sherpa Circle community</div>
+                </div>
+                <div class="include-item">
+                    <div class="include-icon">🏆</div>
+                    <div class="include-text">Certificate of Completion</div>
+                </div>
+                <div class="include-item">
+                    <div class="include-icon">♾️</div>
+                    <div class="include-text">Lifetime access to course materials</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Investment</h2>
+            <div class="pricing-cards">
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Limited Seats</div>
+                    <h3 class="pricing-title">🎓 Pilot Cohort</h3>
+                    <div class="pricing-price">$199</div>
+                    <div class="pricing-period">One-time payment</div>
+                    <ul class="pricing-features">
+                        <li>8 comprehensive learning modules</li>
+                        <li>Interactive workbook & templates</li>
+                        <li>Personalized Sherpa Growth Plan</li>
+                        <li>Sherpa Circle community access</li>
+                        <li>Live Q&A sessions with David</li>
+                        <li>Certificate of completion</li>
+                        <li>Lifetime access to materials</li>
+                    </ul>
+                    <button class="payment-button" onclick="showCoursePayment('pilot')">👉 Reserve Your Spot Now</button>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="pricing-title">💡 Future Enrollment</h3>
+                    <div class="pricing-price">$497</div>
+                    <div class="pricing-period">Standard pricing after pilot</div>
+                    <ul class="pricing-features">
+                        <li>All pilot cohort features</li>
+                        <li>Enhanced community features</li>
+                        <li>Additional bonus materials</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <button class="payment-button secondary" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        How long is the course?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        8 weeks, with one module per week (self-paced + live Q&A).
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Do I need to be a coach already?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Not at all. This is for anyone who wants to guide others — in work, family, or community.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Will I get personal feedback?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes — during live Q&A sessions and in the Sherpa Circle community.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        What if I can't finish on time?
+                        <span class="faq-toggle">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        You'll have lifetime access to the course materials and recordings.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing Section -->
+    <section class="section closing">
+        <div class="container">
+            <div class="closing-quote">"The summit isn't the point. The people you bring with you — that's success."</div>
+            <div class="closing-cta">
+                Become the guide you were meant to be.<br>
+                Join the Sherpa Economy Foundations course today.
+            </div>
+            <button class="btn btn-primary" style="font-size: 1.2rem; padding: 1.5rem 3rem;" onclick="showCoursePayment('pilot')">👉 Enroll Now</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/davidrunnels/">LinkedIn</a>
+            <a href="mailto:info@sherpaeconomy.com">Email</a>
+            <a href="speaking.html">Speaking</a>
+            <a href="consulting.html">Consulting</a>
+        </div>
+        <p>&copy; 2025 David Runnels | Stories & Systems</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // FAQ toggle
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const toggle = button.querySelector('.faq-toggle');
+            
+            faqItem.classList.toggle('active');
+            
+            if (faqItem.classList.contains('active')) {
+                answer.style.display = 'block';
+                toggle.textContent = '×';
+            } else {
+                answer.style.display = 'none';
+                toggle.textContent = '+';
+            }
+        }
+
+        // Course payment function
+        function showCoursePayment(tier) {
+            let productInfo;
+            
+            if (tier === 'pilot') {
+                productInfo = {
+                    name: 'Sherpa Economy Foundations - Pilot Cohort',
+                    title: 'Enroll in Foundations Course',
+                    description: 'Join the pilot cohort of Sherpa Economy Foundations and become the guide you were meant to be. 8 weeks of transformational content with lifetime access.',
+                    price: 19900 // $199.00 in cents
+                };
+            } else {
+                productInfo = {
+                    name: 'Sherpa Economy Foundations - Standard',
+                    title: 'Enroll in Foundations Course',
+                    description: 'Complete Sherpa Economy Foundations course with enhanced features and community access.',
+                    price: 49700 // $497.00 in cents
+                };
+            }
+            
+            window.PaymentComponents.showPaymentModal('course', productInfo);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 58, 82, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.module-card, .include-item, .audience-item, .promise-item').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
+</body>
+</html>

@@ -13,6 +13,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
     <style>
         * {
             margin: 0;
@@ -392,8 +397,80 @@
             opacity: 0.9;
         }
         
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
             .container {
                 padding: 1rem;
             }
@@ -413,7 +490,23 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="foundations-course.html">Foundations Course</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="consulting.html">Consulting</a></li>
+                <li><a href="sherpa-assessment.html" class="active">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top: 80px;">
         <div class="header">
             <h1>🏔️ Find Your Inner Sherpa</h1>
             <p>Discover your unique guidance style and learn how to lead others through their challenges</p>
@@ -484,10 +577,11 @@
                     <ul id="nextStepsList"></ul>
                 </div>
                 
-                <div class="cta-section">
-                    <h3>Ready to Develop Your Sherpa Leadership?</h3>
-                    <p>Join thousands of leaders who are transforming their organizations by becoming guides, not gurus.</p>
-                    <button class="btn" style="background: white; color: var(--primary);">Get the Book</button>
+                <div class="assessment-payment">
+                    <h3>Get Your Detailed Leadership Report</h3>
+                    <p>Upgrade to receive a comprehensive 15-page personalized report with specific action steps, development resources, and a customized leadership development plan based on your assessment results.</p>
+                    <div class="price-display">Detailed Report: $49.99</div>
+                    <button class="payment-button" onclick="showAssessmentPayment()">Get Detailed Report</button>
                 </div>
                 
                 <div class="btn-container">
@@ -831,6 +925,36 @@
             document.getElementById('progressBar').style.width = '0%';
             document.getElementById('progressText').textContent = 'Ready to Begin';
         }
+
+        // Assessment payment function
+        function showAssessmentPayment() {
+            // Get current assessment results
+            const dominantType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const assessmentData = {
+                sherpaType: dominantType,
+                scores: scores,
+                answers: answers
+            };
+
+            const productInfo = {
+                name: 'Sherpa Leadership Assessment Report',
+                title: 'Get Your Detailed Report',
+                description: 'Receive a comprehensive 15-page personalized leadership report with specific action steps, development resources, and a customized plan.',
+                price: 4999 // $49.99 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('assessment', productInfo);
+        }
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
     </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
 </body>
 </html>

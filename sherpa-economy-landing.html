@@ -13,6 +13,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
     <style>
         * {
             margin: 0;
@@ -470,6 +475,7 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="sherpa-economy-landing.html" class="active">Home</a></li>
+                <li><a href="foundations-course.html">Foundations Course</a></li>
                 <li><a href="speaking.html">Speaking</a></li>
                 <li><a href="consulting.html">Consulting</a></li>
                 <li><a href="sherpa-assessment.html">Assessment</a></li>
@@ -487,7 +493,7 @@
             <p class="subtitle">Why the Future Belongs to Guides, Not Gurus</p>
             <p class="author">By David Runnels</p>
             <div class="cta-container">
-                <a href="#order" class="btn btn-primary">Pre-Order Now</a>
+                <button class="btn btn-primary" onclick="showBookPayment()">Pre-Order Now - $24.99</button>
                 <a href="#newsletter" class="btn btn-secondary">Join the Movement</a>
             </div>
         </div>
@@ -582,6 +588,19 @@
         </div>
     </section>
     
+    <!-- Book Pre-Order -->
+    <section class="section" style="background: var(--light);" id="order">
+        <div class="container">
+            <div class="book-preorder">
+                <h3>Pre-Order Sherpa Economy</h3>
+                <p>Be among the first to get your copy and start transforming your leadership approach. Join thousands of leaders who are choosing to guide, not guru.</p>
+                <div class="price-display">Pre-Order Price: $24.99</div>
+                <p style="font-size: 0.9rem; opacity: 0.8; margin: 1rem 0;">Digital and physical copies available. Expected delivery: Q2 2025</p>
+                <button class="payment-button" onclick="showBookPayment()">Pre-Order Now</button>
+            </div>
+        </div>
+    </section>
+    
     <!-- Newsletter -->
     <section class="newsletter" id="newsletter">
         <div class="container">
@@ -664,6 +683,22 @@
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+
+        // Book payment function
+        function showBookPayment() {
+            const productInfo = {
+                name: 'Sherpa Economy Book Pre-Order',
+                title: 'Pre-Order Your Copy',
+                description: 'Get early access to "Sherpa Economy: Why the Future Belongs to Guides, Not Gurus" by David Runnels. Digital and physical copies included.',
+                price: 2499 // $24.99 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('book', productInfo);
+        }
     </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
 </body>
 </html>

@@ -13,6 +13,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
     <style>
         * {
             margin: 0;
@@ -477,6 +482,7 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="foundations-course.html">Foundations Course</a></li>
                 <li><a href="speaking.html" class="active">Speaking</a></li>
                 <li><a href="consulting.html">Consulting</a></li>
                 <li><a href="sherpa-assessment.html">Assessment</a></li>
@@ -492,7 +498,7 @@
             <h1>Transform Your Organization</h1>
             <p class="subtitle">From Guru Culture to Guide-First Leadership</p>
             <div class="cta-container">
-                <a href="#contact" class="btn btn-primary">Book David</a>
+                <button class="btn btn-primary" onclick="showSpeakingPayment()">Book David - $1,000 Deposit</button>
                 <a href="#topics" class="btn btn-secondary">View Topics</a>
             </div>
         </div>
@@ -615,6 +621,7 @@
                     <h3 class="format-title">Keynote</h3>
                     <p class="format-duration">45-60 minutes</p>
                     <p>High-energy, story-driven presentations that inspire and challenge audiences to rethink leadership</p>
+                    <button class="payment-button" onclick="showFormatPayment('keynote')">Book Keynote</button>
                 </div>
 
                 <div class="format-card">
@@ -622,6 +629,7 @@
                     <h3 class="format-title">Workshop</h3>
                     <p class="format-duration">2-4 hours</p>
                     <p>Interactive sessions with practical tools, frameworks, and hands-on application for immediate use</p>
+                    <button class="payment-button" onclick="showFormatPayment('workshop')">Book Workshop</button>
                 </div>
 
                 <div class="format-card">
@@ -629,6 +637,7 @@
                     <h3 class="format-title">Masterclass</h3>
                     <p class="format-duration">Half or Full Day</p>
                     <p>Deep-dive training combining theory, practice, and personalized coaching for leadership teams</p>
+                    <button class="payment-button" onclick="showFormatPayment('masterclass')">Book Masterclass</button>
                 </div>
 
                 <div class="format-card">
@@ -636,6 +645,7 @@
                     <h3 class="format-title">Panel Discussion</h3>
                     <p class="format-duration">30-45 minutes</p>
                     <p>Thought leadership conversations on the future of work, leadership, and organizational culture</p>
+                    <button class="payment-button" onclick="showFormatPayment('panel')">Book Panel</button>
                 </div>
 
                 <div class="format-card">
@@ -643,6 +653,7 @@
                     <h3 class="format-title">Fireside Chat</h3>
                     <p class="format-duration">20-30 minutes</p>
                     <p>Intimate conversations sharing real stories, lessons learned, and practical wisdom</p>
+                    <button class="payment-button" onclick="showFormatPayment('fireside')">Book Fireside Chat</button>
                 </div>
 
                 <div class="format-card">
@@ -650,6 +661,7 @@
                     <h3 class="format-title">Virtual Presentation</h3>
                     <p class="format-duration">Flexible</p>
                     <p>Engaging online presentations designed specifically for virtual audiences and remote teams</p>
+                    <button class="payment-button" onclick="showFormatPayment('virtual')">Book Virtual Event</button>
                 </div>
             </div>
         </div>
@@ -787,6 +799,42 @@
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+
+        // Speaking payment functions
+        function showSpeakingPayment() {
+            const productInfo = {
+                name: 'Speaking Engagement Deposit',
+                title: 'Book David for Your Event',
+                description: 'Secure your speaking engagement with David Runnels. This deposit will be applied to your final speaking fee.',
+                price: 100000 // $1,000.00 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('speaking', productInfo);
+        }
+
+        function showFormatPayment(formatType) {
+            const formatNames = {
+                'keynote': 'Keynote Presentation',
+                'workshop': 'Interactive Workshop',
+                'masterclass': 'Leadership Masterclass',
+                'panel': 'Panel Discussion',
+                'fireside': 'Fireside Chat',
+                'virtual': 'Virtual Presentation'
+            };
+
+            const productInfo = {
+                name: `Speaking Engagement - ${formatNames[formatType]}`,
+                title: `Book ${formatNames[formatType]}`,
+                description: `Secure your ${formatNames[formatType]} with David Runnels. This deposit will be applied to your final speaking fee.`,
+                price: 100000 // $1,000.00 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('speaking', productInfo);
+        }
     </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
 </body>
 </html>

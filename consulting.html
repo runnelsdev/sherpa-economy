@@ -13,6 +13,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
     <style>
         * {
             margin: 0;
@@ -545,6 +550,7 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="foundations-course.html">Foundations Course</a></li>
                 <li><a href="speaking.html">Speaking</a></li>
                 <li><a href="consulting.html" class="active">Consulting</a></li>
                 <li><a href="sherpa-assessment.html">Assessment</a></li>
@@ -560,7 +566,7 @@
             <h1>Guide Your Organization</h1>
             <p class="subtitle">From Vision to Execution with Sherpa Leadership</p>
             <div class="cta-container">
-                <a href="#contact" class="btn btn-primary">Start Your Journey</a>
+                <button class="btn btn-primary" onclick="showConsultationPayment()">Start Your Journey - $250</button>
                 <a href="#services" class="btn btn-secondary">View Services</a>
             </div>
         </div>
@@ -591,6 +597,7 @@
                         <li>Measurement and accountability systems</li>
                     </ul>
                     <p class="service-duration">6-12 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('sherpa-transformation')">Book Consultation - $250</button>
                 </div>
 
                 <div class="service-card">
@@ -607,6 +614,7 @@
                         <li>Execution tracking tools</li>
                     </ul>
                     <p class="service-duration">3-6 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('vision-execution')">Book Consultation - $250</button>
                 </div>
 
                 <div class="service-card">
@@ -623,6 +631,7 @@
                         <li>Culture preservation techniques</li>
                     </ul>
                     <p class="service-duration">4-8 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('transition-leadership')">Book Consultation - $250</button>
                 </div>
 
                 <div class="service-card">
@@ -639,6 +648,7 @@
                         <li>Team effectiveness metrics</li>
                     </ul>
                     <p class="service-duration">3-6 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('team-development')">Book Consultation - $250</button>
                 </div>
 
                 <div class="service-card">
@@ -655,6 +665,7 @@
                         <li>Culture measurement tools</li>
                     </ul>
                     <p class="service-duration">6-9 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('culture-design')">Book Consultation - $250</button>
                 </div>
 
                 <div class="service-card">
@@ -671,6 +682,7 @@
                         <li>Ethical AI leadership training</li>
                     </ul>
                     <p class="service-duration">3-6 month engagement</p>
+                    <button class="payment-button" onclick="showServicePayment('ai-leadership')">Book Consultation - $250</button>
                 </div>
             </div>
         </div>
@@ -917,6 +929,42 @@
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
+
+        // Consultation payment functions
+        function showConsultationPayment() {
+            const productInfo = {
+                name: 'Leadership Consultation',
+                title: 'Book Your Consultation',
+                description: 'Initial consultation to discuss your organizational transformation needs with David Runnels.',
+                price: 25000 // $250.00 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('consultation', productInfo);
+        }
+
+        function showServicePayment(serviceType) {
+            const serviceNames = {
+                'sherpa-transformation': 'Sherpa Leadership Transformation',
+                'vision-execution': 'Vision to Execution Bridge',
+                'transition-leadership': 'Transition Leadership',
+                'team-development': 'Leadership Team Development',
+                'culture-design': 'Culture Design & Implementation',
+                'ai-leadership': 'AI-Era Leadership Preparation'
+            };
+
+            const productInfo = {
+                name: serviceNames[serviceType] || 'Leadership Consultation',
+                title: 'Book Your Consultation',
+                description: `Initial consultation for ${serviceNames[serviceType]} with David Runnels.`,
+                price: 25000 // $250.00 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('consultation', productInfo);
+        }
     </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
 </body>
 </html>

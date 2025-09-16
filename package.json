@@ -1,0 +1,26 @@
+{
+  "name": "sherpa-economy-website",
+  "version": "1.0.0",
+  "description": "Sherpa Economy website with Stripe payment integration",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required for static site'",
+    "test": "echo 'No tests specified'"
+  },
+  "dependencies": {
+    "stripe": "^14.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "keywords": [
+    "leadership",
+    "consulting",
+    "stripe",
+    "payments",
+    "sherpa-economy"
+  ],
+  "author": "David Runnels",
+  "license": "MIT"
+}
