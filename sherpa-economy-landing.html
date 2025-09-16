@@ -392,7 +392,7 @@
             }
 
             .nav-links {
-                display: none;
+                display: none !important;
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -407,7 +407,7 @@
             }
 
             .nav-links.active {
-                display: flex;
+                display: flex !important;
             }
 
             .nav-links li {
@@ -861,42 +861,81 @@
     </footer>
     
     <script>
-        // Mobile menu toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuToggle = document.querySelector('.menu-toggle');
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing mobile menu...');
             
-            navLinks.classList.toggle('active');
-            
-            // Change hamburger to X when menu is open
-            if (navLinks.classList.contains('active')) {
-                menuToggle.innerHTML = '✕';
-            } else {
-                menuToggle.innerHTML = '☰';
-            }
-        }
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
+            // Mobile menu toggle
+            function toggleMenu() {
+                console.log('toggleMenu called');
                 const navLinks = document.getElementById('navLinks');
                 const menuToggle = document.querySelector('.menu-toggle');
                 
-                navLinks.classList.remove('active');
-                menuToggle.innerHTML = '☰';
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (event) => {
-            const nav = document.querySelector('.nav');
+                if (!navLinks || !menuToggle) {
+                    console.error('Navigation elements not found:', { navLinks, menuToggle });
+                    return;
+                }
+                
+                navLinks.classList.toggle('active');
+                console.log('Menu active state:', navLinks.classList.contains('active'));
+                
+                // Change hamburger to X when menu is open
+                if (navLinks.classList.contains('active')) {
+                    menuToggle.innerHTML = '✕';
+                    console.log('Changed to close icon');
+                } else {
+                    menuToggle.innerHTML = '☰';
+                    console.log('Changed to hamburger icon');
+                }
+            }
+            
+            // Make toggleMenu globally available
+            window.toggleMenu = toggleMenu;
+            
+            // Initialize menu state - ensure it starts closed
             const navLinks = document.getElementById('navLinks');
             const menuToggle = document.querySelector('.menu-toggle');
             
-            if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+            if (navLinks && menuToggle) {
                 navLinks.classList.remove('active');
                 menuToggle.innerHTML = '☰';
+                console.log('Menu initialized in closed state');
+                
+                // Add direct event listener as backup
+                menuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Button clicked directly');
+                    toggleMenu();
+                });
             }
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    const navLinks = document.getElementById('navLinks');
+                    const menuToggle = document.querySelector('.menu-toggle');
+                    
+                    if (navLinks && menuToggle) {
+                        navLinks.classList.remove('active');
+                        menuToggle.innerHTML = '☰';
+                    }
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (event) => {
+                const nav = document.querySelector('.nav');
+                const navLinks = document.getElementById('navLinks');
+                const menuToggle = document.querySelector('.menu-toggle');
+                
+                if (nav && navLinks && menuToggle && !nav.contains(event.target) && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.innerHTML = '☰';
+                }
+            });
+            
+            console.log('Mobile menu initialization complete');
         });
 
         // Navbar scroll effect
