@@ -913,6 +913,9 @@
             }
         }
         
+        // Make toggleMenu globally available
+        window.toggleMenu = toggleMenu;
+        
         // Wait for DOM to be fully loaded for additional setup
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM loaded, initializing mobile menu...');
