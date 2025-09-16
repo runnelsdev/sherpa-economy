@@ -510,7 +510,8 @@
         .menu-toggle:hover {
             color: var(--accent);
         }
-
+        
+        /* Ensure mobile/tablet styles override desktop styles */
         @media (max-width: 1024px) {
             .menu-toggle {
                 display: block !important;
@@ -524,7 +525,9 @@
                 font-size: 1.8rem;
                 font-weight: bold;
             }
+        }
 
+        @media (max-width: 1024px) {
             .cta-container,
             .cta-buttons {
                 flex-direction: column;
@@ -550,7 +553,7 @@
             }
 
             .nav-links {
-                display: none;
+                display: none !important;
                 position: absolute;
                 top: 100%;
                 left: 0;

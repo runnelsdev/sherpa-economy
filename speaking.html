@@ -443,8 +443,8 @@
         .menu-toggle:hover {
             color: var(--accent);
         }
-
-        /* Responsive - Mobile/Tablet */
+        
+        /* Ensure mobile/tablet styles override desktop styles */
         @media (max-width: 1024px) {
             .menu-toggle {
                 display: block !important;
@@ -458,6 +458,10 @@
                 font-size: 1.8rem;
                 font-weight: bold;
             }
+        }
+
+        /* Responsive - Mobile/Tablet */
+        @media (max-width: 1024px) {
 
             .cta-container {
                 flex-direction: column;
