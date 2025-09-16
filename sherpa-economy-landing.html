@@ -400,6 +400,37 @@
             .hero {
                 padding-top: 80px;
             }
+
+            /* Cultural Note Responsive */
+            .cultural-content {
+                margin: 0 1rem;
+                border-radius: 15px;
+            }
+
+            .cultural-header {
+                padding: 2rem 1.5rem 1.5rem;
+            }
+
+            .cultural-title {
+                font-size: 1.5rem;
+            }
+
+            .cultural-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .cultural-paragraph {
+                padding-left: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .cultural-closing {
+                padding: 1.5rem;
+            }
+
+            .cultural-quote p {
+                font-size: 1.1rem;
+            }
         }
         
         /* Navigation */
@@ -454,6 +485,129 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+        }
+
+        /* Cultural Note Styles */
+        .cultural-note {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-top: 1px solid #e9ecef;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .cultural-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid rgba(230, 126, 34, 0.1);
+        }
+
+        .cultural-header {
+            background: linear-gradient(135deg, #1a3a52 0%, #2c3e50 100%);
+            color: white;
+            padding: 2.5rem 3rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .cultural-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"></path></svg>');
+            background-size: cover;
+        }
+
+        .cultural-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .cultural-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+
+        .cultural-body {
+            padding: 3rem;
+        }
+
+        .cultural-paragraph {
+            margin-bottom: 2.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--light);
+            transition: all 0.3s ease;
+        }
+
+        .cultural-paragraph:hover {
+            border-left-color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .cultural-highlight {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .cultural-highlight::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            margin-right: 10px;
+        }
+
+        .cultural-paragraph p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin: 0;
+        }
+
+        .cultural-closing {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cultural-closing::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+
+        .cultural-quote p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--primary);
+            font-style: italic;
+            font-weight: 500;
+            margin: 0;
+            position: relative;
+            z-index: 1;
         }
 
         /* Floating Elements Animation */
@@ -574,19 +728,31 @@
     </section>
     
     <!-- Cultural Acknowledgment -->
-    <section class="section" style="background: white;">
+    <section class="section cultural-note">
         <div class="container">
-            <h2 class="section-title">A Note on the Word Sherpa</h2>
-            <div style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 2rem;">
-                    The Sherpa are an indigenous people of Nepal with a history, language, and spiritual tradition that extends far beyond mountaineering. In Western culture, the word sherpa has often been used narrowly to mean "guide," yet this is only one part of their identity.
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 2rem;">
-                    In this work, I use Sherpa as a metaphor — a symbol of service, resilience, humility, and community. The "Sherpa Economy" is not about reducing or stereotyping, but about honoring the spirit of guidance that Sherpas embody, and drawing inspiration from their example for how we can live and work today.
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--primary); font-style: italic; font-weight: 500;">
-                    My hope is that as you explore these ideas, you will discover your own capacity to guide others, remove barriers, and create paths forward — while also holding a deeper appreciation for the dignity and heritage of the Sherpa people themselves.
-                </p>
+            <div class="cultural-content">
+                <div class="cultural-header">
+                    <div class="cultural-icon">🏔️</div>
+                    <h2 class="cultural-title">A Note on the Word Sherpa</h2>
+                </div>
+                
+                <div class="cultural-body">
+                    <div class="cultural-paragraph">
+                        <div class="cultural-highlight">Indigenous Heritage</div>
+                        <p>The Sherpa are an indigenous people of Nepal with a history, language, and spiritual tradition that extends far beyond mountaineering. In Western culture, the word sherpa has often been used narrowly to mean "guide," yet this is only one part of their identity.</p>
+                    </div>
+                    
+                    <div class="cultural-paragraph">
+                        <div class="cultural-highlight">Metaphorical Use</div>
+                        <p>In this work, I use Sherpa as a metaphor — a symbol of service, resilience, humility, and community. The "Sherpa Economy" is not about reducing or stereotyping, but about honoring the spirit of guidance that Sherpas embody, and drawing inspiration from their example for how we can live and work today.</p>
+                    </div>
+                    
+                    <div class="cultural-closing">
+                        <div class="cultural-quote">
+                            <p>My hope is that as you explore these ideas, you will discover your own capacity to guide others, remove barriers, and create paths forward — while also holding a deeper appreciation for the dignity and heritage of the Sherpa people themselves.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
