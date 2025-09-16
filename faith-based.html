@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sherpa as an Archetype for Christ - Faith-Based Leadership</title>
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e67e22">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sherpa Economy">
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="payment-styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a3a52;
+            --accent: #e67e22;
+            --faith: #8b4513;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --faith-gradient: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 58, 82, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-brand {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(rgba(139, 69, 19, 0.9), rgba(160, 82, 45, 0.8)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 820"><path fill="%23f8f9fa" fill-opacity="0.1" d="M0,320L48,314.7C96,309,192,299,288,282.7C384,267,480,245,576,234.7C672,224,768,224,864,229.3C960,235,1056,245,1152,261.3C1248,277,1344,299,1392,309.3L1440,320L1440,820L1392,820C1344,820,1248,820,1152,820C1056,820,960,820,864,820C768,820,672,820,576,820C480,820,384,820,288,820C192,820,96,820,48,820L0,820Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            padding-top: 80px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tagline {
+            color: #f4a261;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .cta-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transform: scale(1);
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--faith);
+        }
+
+        /* Content Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* Cultural Acknowledgment */
+        .cultural-note {
+            background: var(--light);
+        }
+
+        .cultural-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--faith);
+        }
+
+        /* Theological Introduction */
+        .theological-intro {
+            background: white;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .intro-image {
+            text-align: center;
+        }
+
+        .intro-icon {
+            font-size: 8rem;
+            margin-bottom: 1rem;
+            background: var(--faith-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-highlight {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--faith);
+            font-style: italic;
+            color: var(--faith);
+            font-weight: 500;
+        }
+
+        /* Theological Themes */
+        .themes {
+            background: var(--faith-gradient);
+            color: white;
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .theme-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .theme-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .theme-verse {
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .theme-description {
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        /* Book Outline */
+        .book-outline {
+            background: var(--light);
+        }
+
+        .outline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .part-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--faith);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .part-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .part-number {
+            background: var(--faith-gradient);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .part-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .part-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .chapters-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .chapters-list li {
+            padding: 0.5rem 0;
+            color: var(--faith);
+            font-weight: 500;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .chapters-list li:before {
+            content: "✝";
+            position: absolute;
+            left: 0;
+            color: var(--faith);
+        }
+
+        /* Applications */
+        .applications {
+            background: white;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .application-card {
+            text-align: center;
+            padding: 2rem;
+            border: 2px solid var(--light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .application-card:hover {
+            border-color: var(--faith);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 69, 19, 0.1);
+        }
+
+        .application-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--faith);
+        }
+
+        .application-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .application-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .faith-cta {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-verse {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 2rem;
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cta-container,
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .intro-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro-icon {
+                font-size: 5rem;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="sherpa-economy-landing.html" class="nav-brand">Sherpa Economy</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="sherpa-economy-landing.html">Home</a></li>
+                <li><a href="foundations-course.html">Foundations Course</a></li>
+                <li><a href="speaking.html">Speaking</a></li>
+                <li><a href="consulting.html">Consulting</a></li>
+                <li><a href="faith-based.html" class="active">Faith-Based</a></li>
+                <li><a href="sherpa-assessment.html">Assessment</a></li>
+                <li><a href="mailto:info@sherpaeconomy.com">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="tagline">Theological Exploration</p>
+            <h1>The Sherpa as an Archetype for Christ</h1>
+            <p class="subtitle">Discovering divine truth through the servant leadership of mountain guides</p>
+            <div class="cta-container">
+                <button class="btn btn-primary" onclick="showFaithPayment()">Pre-Order Faith Edition - $29.99</button>
+                <a href="#theological" class="btn btn-secondary">Explore the Theology</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Acknowledgment -->
+    <section class="section cultural-note">
+        <div class="container">
+            <h2 class="section-title">A Note on the Word Sherpa</h2>
+            <div class="cultural-content">
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 1.5rem;">
+                    The Sherpa are an indigenous people of Nepal with a history, language, and spiritual tradition that extends far beyond mountaineering. In this theological exploration, I use Sherpa as a metaphor and archetype — not to appropriate their culture, but to honor the Christ-like qualities of service, sacrifice, and guidance that their mountain-guiding tradition embodies.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 1.5rem;">
+                    This work respectfully explores how the servant leadership demonstrated by Sherpa guides offers profound parallels to Christ's ministry, while maintaining deep respect for both Sherpa culture and Christian theology.
+                </p>
+                <p style="font-size: 1rem; font-style: italic; color: var(--faith); font-weight: 500;">
+                    We honor the dignity and heritage of the Sherpa people while exploring how their example of sacrificial service points us toward divine truth.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theological Introduction -->
+    <section class="section theological-intro" id="theological">
+        <div class="container">
+            <h2 class="section-title">Discovering Christ in the Mountain Guide</h2>
+            <div class="intro-grid">
+                <div class="intro-image">
+                    <div class="intro-icon">⛰️</div>
+                    <h3 style="color: var(--faith); font-size: 1.5rem; margin-bottom: 1rem;">The Unexpected Parallel</h3>
+                </div>
+                <div class="intro-text">
+                    <p>
+                        In the thin air of the world's highest peaks, where life hangs by a rope and every step could be your last, an extraordinary form of leadership emerges. The Sherpa guide embodies a servant leadership so profound, so sacrificial, that it mirrors the very heart of Christ's ministry.
+                    </p>
+                    <p>
+                        This theological exploration reveals how the humble mountain guide becomes an archetype for understanding divine love, sacrificial service, and the true nature of Christian leadership.
+                    </p>
+                    <div class="intro-highlight">
+                        "The unexpected theological parallel between Sherpa guides and Christ's ministry reveals timeless truths about servant leadership in extreme conditions."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Theological Themes -->
+    <section class="section themes">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Core Christological Parallels</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+                Seven profound theological themes that connect the Sherpa guide to Christ's ministry
+            </p>
+            
+            <div class="themes-grid">
+                <div class="theme-card">
+                    <div class="theme-icon">✝️</div>
+                    <h3 class="theme-title">Kenosis - Self-Emptying Service</h3>
+                    <p class="theme-verse">"He made himself nothing by taking the very nature of a servant" (Philippians 2:7)</p>
+                    <p class="theme-description">Sherpas literally empty themselves of comfort and safety to serve climbers, mirroring Christ's self-emptying incarnation.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">🏔️</div>
+                    <h3 class="theme-title">Incarnation - Entering Our Condition</h3>
+                    <p class="theme-verse">"The Word became flesh and dwelt among us" (John 1:14)</p>
+                    <p class="theme-description">Just as Christ entered human condition, Sherpas enter the climber's dangerous world to guide them through.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">🎒</div>
+                    <h3 class="theme-title">Substitution - Bearing Our Burdens</h3>
+                    <p class="theme-verse">"Come to me, all who are weary and burdened" (Matthew 11:28)</p>
+                    <p class="theme-description">Sherpas literally carry the weight climbers cannot bear, reflecting Christ's substitutionary atonement.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">🌉</div>
+                    <h3 class="theme-title">Mediation - Bridging the Gap</h3>
+                    <p class="theme-verse">"There is one mediator between God and mankind" (1 Timothy 2:5)</p>
+                    <p class="theme-description">Sherpas bridge two worlds - traditional and modern - as Christ bridges heaven and earth.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">👥</div>
+                    <h3 class="theme-title">Accompaniment - God With Us</h3>
+                    <p class="theme-verse">"Even though I walk through the valley of the shadow of death" (Psalm 23:4)</p>
+                    <p class="theme-description">Sherpas accompany climbers through the "death zone," as Christ accompanies us through life's darkest valleys.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">💔</div>
+                    <h3 class="theme-title">Sacrifice - Voluntary Suffering</h3>
+                    <p class="theme-verse">"Greater love has no one than this: to lay down one's life" (John 15:13)</p>
+                    <p class="theme-description">Sherpas accept extraordinary risk for others' success, reflecting Christ's voluntary sacrifice on the cross.</p>
+                </div>
+
+                <div class="theme-card">
+                    <div class="theme-icon">🌅</div>
+                    <h3 class="theme-title">Resurrection - Overcoming Death</h3>
+                    <p class="theme-verse">"I am the resurrection and the life" (John 11:25)</p>
+                    <p class="theme-description">Sherpas guide others through deadly conditions to new life at the summit, as Christ leads us through death to eternal life.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Book Outline -->
+    <section class="section book-outline">
+        <div class="container">
+            <h2 class="section-title">The Six Parts of Our Journey</h2>
+            <p class="section-subtitle">
+                A comprehensive theological exploration structured like a mountain expedition
+            </p>
+            
+            <div class="outline-grid">
+                <div class="part-card">
+                    <div class="part-number">I</div>
+                    <h3 class="part-title">The Servant Who Carries Our Burdens</h3>
+                    <p class="part-description">Exploring how Sherpas literally bear the weight for climbers, mirroring Christ's substitutionary burden-bearing for humanity.</p>
+                    <ul class="chapters-list">
+                        <li>Bearer of Heavy Loads</li>
+                        <li>The Hidden Strength</li>
+                        <li>Chosen Suffering for Others' Success</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <div class="part-number">II</div>
+                    <h3 class="part-title">The Guide Who Knows the Way</h3>
+                    <p class="part-description">Understanding how Sherpa knowledge of mountain paths reflects Christ as "the Way, the Truth, and the Life."</p>
+                    <ul class="chapters-list">
+                        <li>Intimate Knowledge of the Path</li>
+                        <li>Going Ahead to Prepare the Way</li>
+                        <li>Faithfulness in Repetition</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <div class="part-number">III</div>
+                    <h3 class="part-title">The Companion in Dangerous Places</h3>
+                    <p class="part-description">Examining how Sherpas accompany climbers through the "death zone," reflecting Christ's presence in our darkest moments.</p>
+                    <ul class="chapters-list">
+                        <li>Present in the Death Zone</li>
+                        <li>Breathing Life at High Altitude</li>
+                        <li>Rescue Operations</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <div class="part-number">IV</div>
+                    <h3 class="part-title">The Cultural Bridge</h3>
+                    <p class="part-description">Exploring how Sherpas bridge two worlds, traditional and modern, as Christ bridges heaven and earth through incarnation.</p>
+                    <ul class="chapters-list">
+                        <li>Between Two Worlds</li>
+                        <li>Misunderstood Service</li>
+                        <li>Honor Through Humility</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <div class="part-number">V</div>
+                    <h3 class="part-title">The Community of Guides</h3>
+                    <p class="part-description">Understanding how senior Sherpas train others, reflecting Christ's discipleship model and the Great Commission.</p>
+                    <ul class="chapters-list">
+                        <li>Raising Up Other Guides</li>
+                        <li>The Economy of Service</li>
+                        <li>No One Climbs Alone</li>
+                    </ul>
+                </div>
+
+                <div class="part-card">
+                    <div class="part-number">VI</div>
+                    <h3 class="part-title">The Summit and Beyond</h3>
+                    <p class="part-description">Discovering how Sherpa definition of success - everyone returns safely - reflects Christ's mission to bring many children to glory.</p>
+                    <ul class="chapters-list">
+                        <li>The True Summit</li>
+                        <li>Descending to Serve Again</li>
+                        <li>The Eternal Rope Team</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Practical Applications -->
+    <section class="section applications">
+        <div class="container">
+            <h2 class="section-title">Practical Applications for Faith Communities</h2>
+            <p class="section-subtitle">
+                How churches and faith-based organizations can apply Sherpa-Christ principles
+            </p>
+            
+            <div class="applications-grid">
+                <div class="application-card">
+                    <div class="application-icon">⛪</div>
+                    <h3 class="application-title">Church Leadership</h3>
+                    <p class="application-description">Transforming pastoral leadership from positional authority to servant guidance, following the Sherpa-Christ model of sacrificial service.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">👥</div>
+                    <h3 class="application-title">Discipleship Programs</h3>
+                    <p class="application-description">Creating discipleship that focuses on raising up other guides rather than accumulating followers, multiplying servant leaders.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🤝</div>
+                    <h3 class="application-title">Mission Work</h3>
+                    <p class="application-description">Approaching missions as accompaniment rather than rescue, walking alongside communities in their journey toward flourishing.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">💒</div>
+                    <h3 class="application-title">Community Building</h3>
+                    <p class="application-description">Building faith communities where everyone is both guided and guiding, creating networks of mutual support and growth.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">📖</div>
+                    <h3 class="application-title">Small Group Studies</h3>
+                    <p class="application-description">Using the Sherpa-Christ archetype for deep Bible study, exploring servant leadership through scripture and practical application.</p>
+                </div>
+
+                <div class="application-card">
+                    <div class="application-icon">🌍</div>
+                    <h3 class="application-title">Social Justice</h3>
+                    <p class="application-description">Engaging social justice work as guides who remove barriers and create paths for others, following Christ's example of liberation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section faith-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="section-title" style="color: white;">Following the Ultimate Guide</h2>
+                <p class="cta-verse">
+                    "Therefore, since we are surrounded by such a great cloud of witnesses, let us run with perseverance the race marked out for us, fixing our eyes on Jesus, the pioneer and perfecter of faith."
+                    <br><em>— Hebrews 12:1-2</em>
+                </p>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Join faith leaders discovering how the Sherpa archetype reveals profound truths about Christ's ministry and transforms how we understand servant leadership in the Kingdom of God.
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showFaithPayment()">Pre-Order Faith Edition</button>
+                    <a href="consulting.html" class="btn btn-secondary">Faith-Based Consulting</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/davidrunnels/">LinkedIn</a>
+            <a href="mailto:info@sherpaeconomy.com">Email</a>
+            <a href="speaking.html">Speaking</a>
+            <a href="consulting.html">Consulting</a>
+        </div>
+        <p>&copy; 2025 David Runnels | Stories & Systems</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">The summit isn't the point—the people you bring with you are.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Faith-based payment function
+        function showFaithPayment() {
+            const productInfo = {
+                name: 'Sherpa Economy - Faith Edition',
+                title: 'Pre-Order Faith Edition',
+                description: 'The theological exploration "The Sherpa as an Archetype for Christ" - a deep dive into servant leadership through the lens of faith.',
+                price: 2999 // $29.99 in cents
+            };
+            
+            window.PaymentComponents.showPaymentModal('faith-book', productInfo);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(26, 58, 82, 0.98)';
+            } else {
+                nav.style.background = 'rgba(26, 58, 82, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.querySelectorAll('.theme-card, .part-card, .application-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+    
+    <!-- Load Stripe configuration and payment components -->
+    <script src="stripe-config.js"></script>
+    <script src="payment-components.js"></script>
+</body>
+</html>

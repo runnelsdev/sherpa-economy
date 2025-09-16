@@ -60,6 +60,10 @@ exports.handler = async (event, context) => {
         name: 'Sherpa Economy Foundations Course',
         description: 'Complete 8-week foundations course with lifetime access and community',
       },
+      'faith-book': {
+        name: 'Sherpa Economy - Faith Edition',
+        description: 'The Sherpa as an Archetype for Christ - Theological exploration of servant leadership',
+      },
     };
 
     const productConfig = productConfigs[product];

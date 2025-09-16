@@ -132,6 +132,9 @@ class PaymentComponents {
                 case 'course':
                     clientSecret = await this.stripePayments.createCoursePayment(customerInfo, customerInfo.courseData);
                     break;
+                case 'faith-book':
+                    clientSecret = await this.stripePayments.createFaithBookPayment(customerInfo);
+                    break;
                 default:
                     throw new Error('Invalid product type');
             }

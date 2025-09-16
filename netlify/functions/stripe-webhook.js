@@ -80,6 +80,10 @@ async function handlePaymentSuccess(paymentIntent) {
     case 'course':
       await sendCourseConfirmation(customerEmail, customerName, metadata, paymentIntent);
       break;
+    
+    case 'faith-book':
+      await sendFaithBookConfirmation(customerEmail, customerName, metadata, paymentIntent);
+      break;
   }
 
   // Log to your CRM or database here
@@ -205,6 +209,26 @@ async function sendCourseConfirmation(email, name, metadata, paymentIntent) {
       paymentId: paymentIntent.id,
       courseStartDate: 'TBD', // You can set this based on your cohort schedule
       accessLink: 'https://your-course-platform.com/access' // Replace with actual course platform
+    }
+  };
+  
+  // Example: await sendEmail(emailData);
+}
+
+async function sendFaithBookConfirmation(email, name, metadata, paymentIntent) {
+  console.log(`Sending faith book confirmation to ${email}`);
+  
+  const emailData = {
+    to: email,
+    subject: 'Thank You for Pre-Ordering the Faith Edition!',
+    template: 'faith-book-confirmation',
+    data: {
+      customerName: name,
+      bookTitle: 'The Sherpa as an Archetype for Christ',
+      paymentAmount: (paymentIntent.amount / 100).toFixed(2),
+      paymentId: paymentIntent.id,
+      expectedDelivery: 'Q3 2025', // You can adjust this date
+      bonusContent: 'Study guide for small groups and theological discussion questions'
     }
   };
   

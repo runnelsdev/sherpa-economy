@@ -36,6 +36,12 @@ const PRODUCTS = {
         price: 19900, // $199.00 in cents (pilot pricing)
         currency: 'usd',
         description: 'Complete 8-week foundations course with lifetime access'
+    },
+    'faith-book': {
+        name: 'Sherpa Economy - Faith Edition',
+        price: 2999, // $29.99 in cents
+        currency: 'usd',
+        description: 'The Sherpa as an Archetype for Christ - Theological exploration of servant leadership'
     }
 };
 
@@ -177,6 +183,36 @@ class StripePayments {
             return clientSecret;
         } catch (error) {
             console.error('Error creating course payment:', error);
+            throw error;
+        }
+    }
+
+    // Create payment intent for faith-based book
+    async createFaithBookPayment(customerInfo) {
+        try {
+            const response = await fetch('/.netlify/functions/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product: 'faith-book',
+                    customer: customerInfo,
+                    amount: PRODUCTS['faith-book'].price,
+                    currency: PRODUCTS['faith-book'].currency
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Payment creation failed: ${errorData.error || response.statusText}`);
+            }
+
+            const { clientSecret } = await response.json();
+            console.log('Faith book payment intent created successfully');
+            return clientSecret;
+        } catch (error) {
+            console.error('Error creating faith book payment:', error);
             throw error;
         }
     }
